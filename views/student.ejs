@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>75YALMezunları</h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Ana Sayfa</a></li>
+                    <li><a href="/hakkimizda">Hakkında</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="/">Ana Sayfa</a>
+        <span>></span>
+        <a href="/<%= year %>"><%= year %> Mezunları</a>
+        <span>></span>
+        <a href="/<%= year %>/<%= className %>"><%= className %></a>
+        <span>></span>
+        <span><%= student.name %></span>
+    </div>
+
+    <main class="student-profile">
+        <div class="profile-container">
+            <div class="profile-image">
+                <img src="<%= student.image %>" alt="<%= student.name %>">
+            </div>
+            <div class="profile-content">
+                <h1><%= student.name %></h1>
+                <p class="bio"><%= student.bio %></p>
+                
+                <section class="comments">
+                    <h2>Yorumlar</h2>
+                    <div class="comment-list">
+                        <% student.comments.forEach(comment => { %>
+                        <div class="comment">
+                            <p class="comment-text"><%= comment.text %></p>
+                            <div class="comment-meta">
+                                <span class="author">Yazan: <%= comment.author %></span>
+                                <span class="date"><%= comment.date %></span>
+                            </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

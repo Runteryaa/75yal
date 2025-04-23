@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>75YALMezunları</h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Ana Sayfa</a></li>
+                    <li><a href="/bildir">Bildir</a></li>
+                    <li><a href="/hakkimizda">Hakkında</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="intro">
+            <h2>75YALMezunları</h2>
+            <p>75YAL mezunlarının anılarını, fotoğraflarını ve arkadaşlarının yorumlarını keşfedin.</p>
+        </section>
+        <section class="gallery">
+            <h3>Mezuniyet Yılları</h3>
+            <div class="cards">
+                <% years.forEach(year => { %>
+                <div class="card">
+                    <a href="/<%= year.year %>">
+                        <img src="<%= year.image %>" alt="<%= year.year %> Mezunları">
+                        <h4><%= year.year %> Mezunları</h4>
+                    </a>
+                </div>
+                <% }); %>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

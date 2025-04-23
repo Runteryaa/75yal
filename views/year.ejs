@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>75YALMezunları</h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Ana Sayfa</a></li>
+                    <li><a href="/hakkimizda">Hakkında</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="/">Ana Sayfa</a>
+        <span>></span>
+        <span><%= year %> Mezunları</span>
+    </div>
+
+    <main>
+        <section class="intro">
+            <h2><%= year %> Mezunları</h2>
+            <p>Bu yıla ait sınıfları görüntüleyin ve anıları keşfedin.</p>
+        </section>
+
+        <section class="classes">
+            <h3>Sınıflar</h3>
+            <div class="cards">
+                <% classes.forEach(cls => { %>
+                <div class="card">
+                    <a href="/<%= year %>/<%= cls.name %>">
+                        <img src="<%= cls.image %>" alt="<%= cls.name %> Sınıfı">
+                        <h4><%= cls.name %></h4>
+                        <p><%= cls.students %> Öğrenci</p>
+                    </a>
+                </div>
+                <% }); %>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

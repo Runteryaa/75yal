@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>75YALMezunları</h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Ana Sayfa</a></li>
+                    <li><a href="/hakkimizda">Hakkında</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="breadcrumb">
+        <a href="/">Ana Sayfa</a>
+        <span>></span>
+        <a href="/<%= year %>"><%= year %> Mezunları</a>
+        <span>></span>
+        <span><%= className %></span>
+    </div>
+
+    <main>
+        <section class="intro">
+            <h2><%= year %> - <%= className %></h2>
+            <p>Bu sınıftaki öğrencilere göz atın ve anıları paylaşın.</p>
+        </section>
+
+        <section class="students">
+            <h3>Öğrenciler</h3>
+            <div class="cards">
+                <% students.forEach(student => { %>
+                <div class="card">
+                    <a href="/<%= year %>/<%= className %>/<%= student.number %>">
+                        <img src="<%= student.image %>" alt="<%= student.name %>">
+                        <h4><%= student.name %></h4>
+                        <p><span class="number"><%= student.number %></span> • <%= student.comments.length %> Yorum</p>
+                    </a>
+                </div>
+                <% }); %>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

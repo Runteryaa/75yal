@@ -1,0 +1,57 @@
+{
+  "years": {
+    "2023": {
+      "image": "https://example.com/images/2023.jpg",
+      "classes": {
+        "12-A": {
+          "image": "https://example.com/images/12-A.jpg",
+          "students": [
+            {
+              "number": "1001",
+              "name": "Ahmet Yılmaz",
+              "image": "https://example.com/images/student1.jpg",
+              "bio": "Okul futbol takımında kaptan olarak görev yaptı. İyi bir takım oyuncusu ve arkadaşı olarak hatırlanıyor. Mezuniyet sonrası mühendislik eğitimine devam etmek istiyor.",
+              "comments": [
+                {
+                  "text": "Ahmet her zaman çok yardımsever biriydi. Matematik ödevlerinde bana çok yardımcı oldu. Onu hiç unutmayacağım!",
+                  "author": "Ayşe Demir",
+                  "date": "15.04.2023"
+                },
+                {
+                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
+                  "author": "Mehmet Kaya",
+                  "date": "16.04.2023"
+                }
+              ]
+            }
+          ]
+        },
+        "12-B": {
+          "image": "https://example.com/images/12-B.jpg",
+          "students": [
+            {
+              "number": "1002",
+              "name": "Ayşe Demir",
+              "image": "https://example.com/images/student2.jpg",
+              "bio": "Matematikte çok başarılı bir öğrenciydi ve arkadaşlarına her zaman yardımcı olurdu.",
+              "comments": []
+            }
+          ]
+        },
+        "12-C": {
+          "image": "https://example.com/images/12-C.jpg",
+          "students": []
+        }
+      }
+    },
+    "2022": {
+      "image": "https://example.com/images/2022.jpg",
+      "classes": {
+        "12-A": {
+          "image": "https://example.com/images/12-A-2022.jpg",
+          "students": []
+        }
+      }
+    }
+  }
+}
