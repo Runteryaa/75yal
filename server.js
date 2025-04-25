@@ -85,7 +85,7 @@ app.get('/:year/:className/:studentNumber', (req, res) => {
 });
 
 
-app.get('/', (req, res) => {
+app.get('/hakkinda', (req, res) => {
     res.render('hakkinda', { 
         title: 'Hakkında'
     });
