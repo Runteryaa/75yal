@@ -84,6 +84,14 @@ app.get('/:year/:className/:studentNumber', (req, res) => {
     });
 });
 
+
+app.get('/', (req, res) => {
+    res.render('hakkinda', { 
+        title: 'Hakkında'
+    });
+});
+
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
