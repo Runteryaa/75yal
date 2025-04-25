@@ -1,15 +1,15 @@
 {
   "years": {
     "2023": {
-      "image": "https://example.com/images/2023.jpg",
+      "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
       "classes": {
         "12-A": {
-          "image": "https://example.com/images/12-A.jpg",
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
           "students": [
             {
               "number": "1001",
               "name": "Ahmet Yılmaz",
-              "image": "https://example.com/images/student1.jpg",
+              "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
               "bio": "Okul futbol takımında kaptan olarak görev yaptı. İyi bir takım oyuncusu ve arkadaşı olarak hatırlanıyor. Mezuniyet sonrası mühendislik eğitimine devam etmek istiyor.",
               "comments": [
                 {
@@ -27,7 +27,7 @@
           ]
         },
         "12-B": {
-          "image": "https://example.com/images/12-B.jpg",
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
           "students": [
             {
               "number": "1002",
@@ -39,16 +39,16 @@
           ]
         },
         "12-C": {
-          "image": "https://example.com/images/12-C.jpg",
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
           "students": []
         }
       }
     },
     "2022": {
-      "image": "https://example.com/images/2022.jpg",
+      "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
       "classes": {
         "12-A": {
-          "image": "https://example.com/images/12-A-2022.jpg",
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
           "students": []
         }
       }
