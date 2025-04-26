@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Yorum Onay Paneli</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>Bekleyen Yorumlar</h1>
+    <% if (reviews.length === 0) { %>
+        <p>Onay bekleyen yorum yok.</p>
+    <% } %>
+    <ul>
+        <% reviews.forEach(r => { %>
+            <li style="margin-bottom:24px;">
+                <strong><%= r.author %></strong> (<%= r.year %> / <%= r.className %> / <%= r.studentNumber %>):<br>
+                <em><%= r.text %></em>
+                <form action="/admin/reviews/approve" method="post" style="display:inline;">
+                    <input type="hidden" name="year" value="<%= r.year %>">
+                    <input type="hidden" name="className" value="<%= r.className %>">
+                    <input type="hidden" name="studentNumber" value="<%= r.studentNumber %>">
+                    <input type="hidden" name="author" value="<%= r.author %>">
+                    <input type="hidden" name="text" value="<%= r.text %>">
+                    <button type="submit">Onayla</button>
+                </form>
+                <form action="/admin/reviews/reject" method="post" style="display:inline;">
+                    <input type="hidden" name="year" value="<%= r.year %>">
+                    <input type="hidden" name="className" value="<%= r.className %>">
+                    <input type="hidden" name="studentNumber" value="<%= r.studentNumber %>">
+                    <input type="hidden" name="author" value="<%= r.author %>">
+                    <input type="hidden" name="text" value="<%= r.text %>">
+                    <button type="submit">Sil</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>

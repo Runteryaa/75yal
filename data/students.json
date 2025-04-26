@@ -1,5 +1,14 @@
 {
   "years": {
+    "2022": {
+      "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+      "classes": {
+        "12-A": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": []
+        }
+      }
+    },
     "2023": {
       "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
       "classes": {
@@ -21,6 +30,16 @@
                   "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
                   "author": "Mehmet Kaya",
                   "date": "16.04.2023"
+                },
+                {
+                  "author": "asd",
+                  "text": "asdasda",
+                  "date": "27.04.2025"
+                },
+                {
+                  "author": "elma",
+                  "text": "adam",
+                  "date": "27.04.2025"
                 }
               ]
             }
@@ -69,21 +88,37 @@
                   "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
                   "author": "Mehmet Kaya",
                   "date": "16.04.2023"
+                },
+                {
+                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
+                  "author": "Mehmet Kaya",
+                  "date": "16.04.2023"
+                },
+                {
+                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
+                  "author": "Mehmet Kaya",
+                  "date": "16.04.2023"
+                },
+                {
+                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
+                  "author": "Mehmet Kaya",
+                  "date": "16.04.2023"
+                },
+                {
+                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
+                  "author": "Mehmet Kaya",
+                  "date": "16.04.2023"
+                },
+                {
+                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
+                  "author": "Mehmet Kaya",
+                  "date": "16.04.2023"
                 }
               ]
             }
           ]
         },
         "12-C": {
-          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
-          "students": []
-        }
-      }
-    },
-    "2022": {
-      "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
-      "classes": {
-        "12-A": {
           "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
           "students": []
         }

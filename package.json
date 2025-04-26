@@ -7,7 +7,9 @@
   "type": "commonjs",
   "main": "index.js",
   "dependencies": {
+    "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "express-sessions": "^1.0.6"
   }
 }

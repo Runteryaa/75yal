@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -117,6 +119,129 @@ app.get('/search', (req, res) => {
     }
 
     res.render('search', { title: 'Mezun Ara', results, query });
+});
+
+const reviewPath = path.join(__dirname, 'data', 'review.json');
+app.use(express.urlencoded({ extended: true }));
+
+app.post('/yorum-ekle', (req, res) => {
+    const { year, className, studentNumber, author, text } = req.body;
+    if (!year || !className || !studentNumber || !author || !text) {
+        return res.status(400).send('Eksik bilgi');
+    }
+
+    const newReview = {
+        year,
+        className,
+        studentNumber,
+        author,
+        text,
+        date: new Date().toLocaleDateString('tr-TR'),
+        approved: false
+    };
+
+    let reviews = [];
+    try {
+        if (fs.existsSync(reviewPath)) {
+            reviews = JSON.parse(fs.readFileSync(reviewPath, 'utf8'));
+        }
+    } catch (err) {
+        reviews = [];
+    }
+    reviews.push(newReview);
+    fs.writeFileSync(reviewPath, JSON.stringify(reviews, null, 2), 'utf8');
+
+    res.redirect(`/mezunlar/${year}/${className}/${studentNumber}`);
+});
+
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
+
+function parseCookies(req) {
+    const list = {};
+    const rc = req.headers.cookie;
+    if (rc) {
+        rc.split(';').forEach(cookie => {
+            const parts = cookie.split('=');
+            list[parts.shift().trim()] = decodeURI(parts.join('='));
+        });
+    }
+    return list;
+}
+
+function requireAdmin(req, res, next) {
+    const cookies = parseCookies(req);
+    if (cookies.admin === 'true') {
+        return next();
+    }
+    res.redirect('/admin');
+}
+
+app.get('/admin', (req, res) => {
+    res.render('admin_login', { error: null });
+});
+
+app.post('/admin/login', (req, res) => {
+    const { password } = req.body;
+    if (password === ADMIN_PASSWORD) {
+        res.setHeader('Set-Cookie', 'admin=true; Path=/; HttpOnly');
+        return res.redirect('/admin/reviews');
+    }
+    res.render('admin_login', { error: 'Hatalı şifre' });
+});
+
+app.get('/admin/reviews', requireAdmin, (req, res) => {
+    let reviews = [];
+    try {
+        if (fs.existsSync(reviewPath)) {
+            reviews = JSON.parse(fs.readFileSync(reviewPath, 'utf8'));
+        }
+    } catch (err) {
+        reviews = [];
+    }
+    res.render('admin_reviews', { reviews });
+});
+
+app.post('/admin/reviews/approve', requireAdmin, (req, res) => {
+    const { year, className, studentNumber, author, text } = req.body;
+    let reviews = JSON.parse(fs.readFileSync(reviewPath, 'utf8'));
+    const index = reviews.findIndex(r =>
+        r.year === year &&
+        r.className === className &&
+        r.studentNumber === studentNumber &&
+        r.author === author &&
+        r.text === text
+    );
+    if (index !== -1) {
+        const studentsPath = path.join(__dirname, 'data', 'students.json');
+        const studentsData = JSON.parse(fs.readFileSync(studentsPath, 'utf8'));
+        const student = studentsData.years[year]?.classes?.[className]?.students?.find(s => s.number === studentNumber);
+        if (student) {
+            if (!student.comments) student.comments = [];
+            student.comments.push({
+                author,
+                text,
+                date: new Date().toLocaleDateString('tr-TR')
+            });
+            fs.writeFileSync(studentsPath, JSON.stringify(studentsData, null, 2), 'utf8');
+        }
+        reviews.splice(index, 1);
+        fs.writeFileSync(reviewPath, JSON.stringify(reviews, null, 2), 'utf8');
+    }
+    res.redirect('/admin/reviews');
+});
+
+app.post('/admin/reviews/reject', requireAdmin, (req, res) => {
+    const { year, className, studentNumber, author, text } = req.body;
+    let reviews = JSON.parse(fs.readFileSync(reviewPath, 'utf8'));
+    reviews = reviews.filter(r =>
+        !(r.year === year &&
+        r.className === className &&
+        r.studentNumber === studentNumber &&
+        r.author === author &&
+        r.text === text)
+    );
+    fs.writeFileSync(reviewPath, JSON.stringify(reviews, null, 2), 'utf8');
+    res.redirect('/admin/reviews');
 });
 
 // Start the server
