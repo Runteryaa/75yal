@@ -35,6 +35,42 @@
               "image": "https://example.com/images/student2.jpg",
               "bio": "Matematikte çok başarılı bir öğrenciydi ve arkadaşlarına her zaman yardımcı olurdu.",
               "comments": []
+            },
+            {
+              "number": "1001",
+              "name": "Ahmet Yılmaz",
+              "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+              "bio": "Okul futbol takımında kaptan olarak görev yaptı. İyi bir takım oyuncusu ve arkadaşı olarak hatırlanıyor. Mezuniyet sonrası mühendislik eğitimine devam etmek istiyor.",
+              "comments": [
+                {
+                  "text": "Ahmet her zaman çok yardımsever biriydi. Matematik ödevlerinde bana çok yardımcı oldu. Onu hiç unutmayacağım!",
+                  "author": "Ayşe Demir",
+                  "date": "15.04.2023"
+                },
+                {
+                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
+                  "author": "Mehmet Kaya",
+                  "date": "16.04.2023"
+                }
+              ]
+            },
+            {
+              "number": "1003",
+              "name": "Ahmet Yılmaz",
+              "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+              "bio": "Okul futbol takımında kaptan olarak görev yaptı. İyi bir takım oyuncusu ve arkadaşı olarak hatırlanıyor. Mezuniyet sonrası mühendislik eğitimine devam etmek istiyor.",
+              "comments": [
+                {
+                  "text": "Ahmet her zaman çok yardımsever biriydi. Matematik ödevlerinde bana çok yardımcı oldu. Onu hiç unutmayacağım!",
+                  "author": "Ayşe Demir",
+                  "date": "15.04.2023"
+                },
+                {
+                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
+                  "author": "Mehmet Kaya",
+                  "date": "16.04.2023"
+                }
+              ]
             }
           ]
         },

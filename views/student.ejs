@@ -10,6 +10,10 @@
     <header>
         <div class="container">
             <h1>75YALMezunları</h1>
+            <form action="/search" method="get" class="mezun-search">
+                <input type="text" name="q" placeholder="Mezun adı veya numarası" required>
+                <button type="submit">Ara</button>
+            </form>
             <nav>
                 <ul>
                     <li><a href="/">Ana Sayfa</a></li>
@@ -22,9 +26,9 @@
     <div class="breadcrumb">
         <a href="/">Ana Sayfa</a>
         <span>></span>
-        <a href="/<%= year %>"><%= year %> Mezunları</a>
+        <a href="/mezunlar/<%= year %>"><%= year %> Mezunları</a>
         <span>></span>
-        <a href="/<%= year %>/<%= className %>"><%= className %></a>
+        <a href="/mezunlar/<%= year %>/<%= className %>"><%= className %></a>
         <span>></span>
         <span><%= student.name %></span>
     </div>

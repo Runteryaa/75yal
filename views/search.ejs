@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>75YALMezunları</h1>
+            <form action="/search" method="get" class="mezun-search">
+                <input type="text" name="q" placeholder="Mezun adı veya numarası" value="<%= query || '' %>" required>
+                <button type="submit">Ara</button>
+            </form>
+            <nav>
+                <ul>
+                    <li><a href="/">Ana Sayfa</a></li>
+                    <li><a href="/hakkinda">Hakkında</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="breadcrumb">
+        <a href="/">Ana Sayfa</a>
+        <span>></span>
+        <span>Mezun Ara</span>
+    </div>
+    <main>
+        <section class="intro">
+            <h2>Öğrenciler</h2>
+        </section>
+        <section class="gallery">
+            <% if (typeof query !== 'undefined') { %>
+                <p>
+                    "<%= query %>" için <%= results.length %> sonuç bulundu.
+                </p>
+            <% } %>
+            <div class="cards">
+                <% results.forEach(result => { %>
+                    <div class="card">
+                        <a href="/mezunlar/<%= result.year %>/<%= result.className %>/<%= result.student.number %>">
+                            <img src="<%= result.student.photo || 'https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg' %>" alt="<%= result.student.name %>">
+                            <h4><%= result.student.name %></h4>
+                            <p>
+                                <span class="number"><%= result.student.number %></span>
+                                <% if (result.student.comments && result.student.comments.length > 0) { %>
+                                    • <%= result.student.comments.length %> Yorum
+                                <% } %>
+                            </p>
+                        </a>
+                    </div>
+                <% }) %>
+            </div>
+            <% if (results.length === 0 && typeof query !== 'undefined') { %>
+                <p class="no-results">Sonuç bulunamadı.</p>
+            <% } %>
+        </section>
+    </main>
+</body>
+</html>

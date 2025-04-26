@@ -15,7 +15,14 @@ app.set('views', path.join(__dirname, 'views'));
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
+// Place this before the dynamic routes
+app.get('/hakkinda', (req, res) => {
+    res.render('hakkinda', { 
+        title: 'Hakkında'
+    });
+});
+
+// Dynamic routes below...
 app.get('/', (req, res) => {
     const years = Object.entries(studentData.years).map(([year, yearData]) => ({
         year,
@@ -28,7 +35,7 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/:year', (req, res) => {
+app.get('/mezunlar/:year', (req, res) => {
     const year = req.params.year;
     const yearData = studentData.years[year];
 
@@ -50,7 +57,7 @@ app.get('/:year', (req, res) => {
     });
 });
 
-app.get('/:year/:className', (req, res) => {
+app.get('/mezunlar/:year/:className', (req, res) => {
     const { year, className } = req.params;
     const classData = studentData.years[year]?.classes?.[className];
 
@@ -67,7 +74,8 @@ app.get('/:year/:className', (req, res) => {
     });
 });
 
-app.get('/:year/:className/:studentNumber', (req, res) => {
+// Change from '/:year/:className/:studentNumber' to '/mezunlar/:year/:className/:studentNumber'
+app.get('/mezunlar/:year/:className/:studentNumber', (req, res) => {
     const { year, className, studentNumber } = req.params;
     const students = studentData.years[year]?.classes?.[className]?.students;
     const student = students?.find(s => s.number === studentNumber);
@@ -84,13 +92,32 @@ app.get('/:year/:className/:studentNumber', (req, res) => {
     });
 });
 
+app.get('/search', (req, res) => {
+    const query = req.query.q?.toLowerCase().trim();
+    if (!query) {
+        return res.render('search', { title: 'Mezun Ara', results: [], query: '' });
+    }
 
-app.get('/hakkinda', (req, res) => {
-    res.render('hakkinda', { 
-        title: 'Hakkında'
-    });
+    let results = [];
+    for (const [year, yearData] of Object.entries(studentData.years)) {
+        for (const [className, classData] of Object.entries(yearData.classes)) {
+            for (const student of classData.students) {
+                if (
+                    student.name.toLowerCase().includes(query) ||
+                    student.number === query
+                ) {
+                    results.push({
+                        year,
+                        className,
+                        student
+                    });
+                }
+            }
+        }
+    }
+
+    res.render('search', { title: 'Mezun Ara', results, query });
 });
-
 
 // Start the server
 app.listen(PORT, () => {

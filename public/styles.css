@@ -280,55 +280,53 @@ header nav ul li a {
     margin: 2rem 0 1rem;
 }
 
-.search-container {
-    position: relative;
-    max-width: 600px;
-    margin: 1rem auto;
+.mezun-search {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+    align-items: center;
 }
-
-#searchInput {
-    width: 100%;
-    padding: 12px 20px;
-    border: 2px solid #6c63ff;
-    border-radius: 25px;
-    font-size: 16px;
-    outline: none;
+.mezun-search input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 220px;
     transition: border-color 0.2s;
 }
-
-#searchInput:focus {
-    border-color: #5048ff;
+.mezun-search input[type="text"]:focus {
+    border-color: #0078d7;
+    outline: none;
 }
-
+.mezun-search button {
+    padding: 8px 18px;
+    background: #0078d7;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.mezun-search button:hover {
+    background: #005fa3;
+}
 .search-results {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 8px;
-    max-height: 400px;
-    overflow-y: auto;
-    z-index: 1000;
+    margin-top: 2rem;
 }
-
-.search-result {
-    display: block;
-    padding: 12px 20px;
-    text-decoration: none;
-    color: #333;
-    border-bottom: 1px solid #eee;
+.search-results ul {
+    list-style: none;
+    padding: 0;
 }
-
-.search-result:last-child {
-    border-bottom: none;
+.search-results li {
+    margin-bottom: 10px;
+    background: #f5f5f5;
+    padding: 10px 14px;
+    border-radius: 5px;
+    transition: background 0.2s;
 }
-
-.search-result:hover {
-    background: #f5f5ff;
+.search-results li:hover {
+    background: #e0eaff;
 }
 
 .student-info {

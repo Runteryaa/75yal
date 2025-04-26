@@ -10,6 +10,10 @@
     <header>
         <div class="container">
             <h1>75YALMezunları</h1>
+            <form action="/search" method="get" class="mezun-search">
+                <input type="text" name="q" placeholder="Mezun adı veya numarası" required>
+                <button type="submit">Ara</button>
+            </form>
             <nav>
                 <ul>
                     <li><a href="/">Ana Sayfa</a></li>
@@ -36,7 +40,7 @@
             <div class="cards">
                 <% classes.forEach(cls => { %>
                 <div class="card">
-                    <a href="/<%= year %>/<%= cls.name %>">
+                    <a href="/mezunlar/<%= year %>/<%= cls.name %>">
                         <img src="<%= cls.image %>" alt="<%= cls.name %> Sınıfı">
                         <h4><%= cls.name %></h4>
                         <p><%= cls.students %> Öğrenci</p>
