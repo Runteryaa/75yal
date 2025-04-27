@@ -45,28 +45,7 @@
                 <section class="comments">
                     <h2>Yorumlar</h2>
                     <!-- Yorum ekle formu -->
-                    <form action="/yorum-ekle" method="post" class="add-comment-form" style="margin-bottom: 24px; display: flex; flex-direction: column; gap: 10px; max-width: 500px;">
-                        <input type="hidden" name="year" value="<%= year %>">
-                        <input type="hidden" name="className" value="<%= className %>">
-                        <input type="hidden" name="studentNumber" value="<%= student.number %>">
-                        <input 
-                            type="text" 
-                            name="author" 
-                            placeholder="Adınız" 
-                            required 
-                            style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;"
-                        >
-                        <textarea 
-                            name="text" 
-                            placeholder="Yorumunuz" 
-                            required 
-                            style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; min-height: 60px; resize: vertical;"
-                        ></textarea>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <button type="submit" class="btn" style="padding: 8px 24px; font-size: 1rem;">Yorum Ekle</button>
-                            <span style="font-size:0.95em;color:#888;">Yorumunuz önce yöneticinin onayına gönderilecektir.</span>
-                        </div>
-                    </form>
+                    <h5>Yorum eklemek için bize instagram adresimizden <a href="https://instagram.com/yillik75yal">(@yillik75yal)</a> yazabilirsiniz. Bunun nedeni gerçekten siz olduğunuzu doğrulamak.</h5>
                     <div class="comment-list">
                         <% student.comments.forEach(comment => { %>
                         <div class="comment">

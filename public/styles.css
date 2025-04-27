@@ -4,6 +4,7 @@ body {
     padding: 0;
     background-color: #f9f9ff;
     color: #333;
+    overflow-y: scroll;
 }
 
 header {

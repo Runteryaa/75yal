@@ -151,7 +151,11 @@ app.post('/yorum-ekle', (req, res) => {
     reviews.push(newReview);
     fs.writeFileSync(reviewPath, JSON.stringify(reviews, null, 2), 'utf8');
 
-    res.redirect(`/mezunlar/${year}/${className}/${studentNumber}`);
+    try {
+        res.redirect(`/mezunlar/${year}/${className}/${studentNumber}`);
+    } catch (error) {
+        res.redirect(`/mezunlar/${year}/${className}/${studentNumber}`);
+    }
 });
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
@@ -173,87 +177,50 @@ function requireAdmin(req, res, next) {
     if (cookies.admin === 'true') {
         return next();
     }
-    res.redirect('/admin');
+    res.redirect('/admin/login');
 }
 
-app.get('/admin', (req, res) => {
+app.get('/admin', requireAdmin, (req, res) => {
+    res.render('admin', { title: 'Admin Paneli' });
+});
+
+app.get('/admin/login', (req, res) => {
     res.render('admin_login', { error: null });
 });
+
 
 app.post('/admin/login', (req, res) => {
     const { password } = req.body;
     if (password === ADMIN_PASSWORD) {
         res.setHeader('Set-Cookie', 'admin=true; Path=/; HttpOnly');
-        return res.redirect('/admin/reviews');
+        return res.redirect('/admin');
     }
     res.render('admin_login', { error: 'Hatalı şifre' });
 });
 
-app.get('/admin/reviews', requireAdmin, (req, res) => {
-    let reviews = [];
+// Show the report form page
+app.get('/bildir', (req, res) => {
+    res.render('bildir', { success: false });
+});
+
+// Handle report form submissions
+app.post('/bildir', (req, res) => {
+    const { student, author, comment, reason } = req.body;
+    const reportPath = path.join(__dirname, 'data', 'reports.json');
+    let reports = [];
     try {
-        if (fs.existsSync(reviewPath)) {
-            reviews = JSON.parse(fs.readFileSync(reviewPath, 'utf8'));
+        if (fs.existsSync(reportPath)) {
+            reports = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
         }
     } catch (err) {
-        reviews = [];
+        reports = [];
     }
-    res.render('admin_reviews', { reviews });
-});
-
-app.post('/admin/reviews/approve', requireAdmin, (req, res) => {
-    const { year, className, studentNumber, author, text } = req.body;
-    console.log('Approve request:', { year, className, studentNumber, author, text });
-
-    let reviews = JSON.parse(fs.readFileSync(reviewPath, 'utf8'));
-    const index = reviews.findIndex(r =>
-        r.year === year &&
-        r.className === className &&
-        r.studentNumber === studentNumber &&
-        r.author === author &&
-        r.text === text
-    );
-    console.log('Review found at index:', index);
-
-    if (index !== -1) {
-        const studentsPath = path.join(__dirname, 'data', 'students.json');
-        const studentsData = JSON.parse(fs.readFileSync(studentsPath, 'utf8'));
-        const student = studentsData.years[year]?.classes?.[className]?.students?.find(s => s.number === studentNumber);
-        console.log('Student found:', !!student, student);
-
-        if (student) {
-            if (!student.comments) student.comments = [];
-            student.comments.push({
-                author,
-                text,
-                date: new Date().toLocaleDateString('tr-TR')
-            });
-            fs.writeFileSync(studentsPath, JSON.stringify(studentsData, null, 2), 'utf8');
-            console.log('Comment added and students.json updated.');
-        } else {
-            console.log('Student not found, comment not added.');
-        }
-        reviews.splice(index, 1);
-        fs.writeFileSync(reviewPath, JSON.stringify(reviews, null, 2), 'utf8');
-        console.log('Review removed from review.json.');
-    } else {
-        console.log('Review not found in review.json.');
-    }
-    res.redirect('/admin/reviews');
-});
-
-app.post('/admin/reviews/reject', requireAdmin, (req, res) => {
-    const { year, className, studentNumber, author, text } = req.body;
-    let reviews = JSON.parse(fs.readFileSync(reviewPath, 'utf8'));
-    reviews = reviews.filter(r =>
-        !(r.year === year &&
-        r.className === className &&
-        r.studentNumber === studentNumber &&
-        r.author === author &&
-        r.text === text)
-    );
-    fs.writeFileSync(reviewPath, JSON.stringify(reviews, null, 2), 'utf8');
-    res.redirect('/admin/reviews');
+    reports.push({
+        student, author, comment, reason,
+        date: new Date().toLocaleString('tr-TR')
+    });
+    fs.writeFileSync(reportPath, JSON.stringify(reports, null, 2), 'utf8');
+    res.send('Bildiriminiz alınmıştır. Teşekkürler!');
 });
 
 // Start the server

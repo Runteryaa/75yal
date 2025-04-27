@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yorum Bildir</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>75YALMezunları</h1>
+            <form action="/search" method="get" class="mezun-search">
+                <input type="text" name="q" placeholder="Mezun adı veya numarası" required>
+                <button type="submit">Ara</button>
+            </form>
+            <nav>
+                <ul>
+                    <li><a href="/">Ana Sayfa</a></li>
+                    <li><a href="/bildir">Bildir</a></li>
+                    <li><a href="/hakkinda">Hakkında</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="breadcrumb">
+        <a href="/">Ana Sayfa</a>
+        <span>></span>
+        <span>Yorum Bildir</span>
+    </div>
+    <main>
+        <section class="intro">
+            <h2>Yorum Bildir</h2>
+            <p>Uygunsuz veya hatalı bir yorumu aşağıdaki form ile yöneticilere bildirebilirsiniz.</p>
+        </section>
+        <section class="report-form">
+            <form action="/bildir" method="post" style="max-width:500px;display:flex;flex-direction:column;gap:12px;">
+                <label>
+                    Yorumun Bulunduğu Mezun (Adı veya Numarası):
+                    <input type="text" name="student" required placeholder="Örn: Ahmet Yılmaz veya 1001">
+                </label>
+                <label>
+                    Yorumun sahibi (Yazan kişi):
+                    <input type="text" name="author" required placeholder="Yorum yazan kişi adı">
+                </label>
+                <label>
+                    Yorum içeriği:
+                    <textarea name="comment" required placeholder="Bildirilecek yorumun tamamı"></textarea>
+                </label>
+                <label>
+                    Bildirme sebebiniz:
+                    <textarea name="reason" required placeholder="Neden bildiriyorsunuz?"></textarea>
+                </label>
+                <button type="submit" class="btn">Bildir</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
