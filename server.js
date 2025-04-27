@@ -203,6 +203,8 @@ app.get('/admin/reviews', requireAdmin, (req, res) => {
 
 app.post('/admin/reviews/approve', requireAdmin, (req, res) => {
     const { year, className, studentNumber, author, text } = req.body;
+    console.log('Approve request:', { year, className, studentNumber, author, text });
+
     let reviews = JSON.parse(fs.readFileSync(reviewPath, 'utf8'));
     const index = reviews.findIndex(r =>
         r.year === year &&
@@ -211,10 +213,14 @@ app.post('/admin/reviews/approve', requireAdmin, (req, res) => {
         r.author === author &&
         r.text === text
     );
+    console.log('Review found at index:', index);
+
     if (index !== -1) {
         const studentsPath = path.join(__dirname, 'data', 'students.json');
         const studentsData = JSON.parse(fs.readFileSync(studentsPath, 'utf8'));
         const student = studentsData.years[year]?.classes?.[className]?.students?.find(s => s.number === studentNumber);
+        console.log('Student found:', !!student, student);
+
         if (student) {
             if (!student.comments) student.comments = [];
             student.comments.push({
@@ -223,9 +229,15 @@ app.post('/admin/reviews/approve', requireAdmin, (req, res) => {
                 date: new Date().toLocaleDateString('tr-TR')
             });
             fs.writeFileSync(studentsPath, JSON.stringify(studentsData, null, 2), 'utf8');
+            console.log('Comment added and students.json updated.');
+        } else {
+            console.log('Student not found, comment not added.');
         }
         reviews.splice(index, 1);
         fs.writeFileSync(reviewPath, JSON.stringify(reviews, null, 2), 'utf8');
+        console.log('Review removed from review.json.');
+    } else {
+        console.log('Review not found in review.json.');
     }
     res.redirect('/admin/reviews');
 });
