@@ -33,6 +33,10 @@ app.get('/hakkinda', (req, res) => {
     });
 });
 
+app.get('/mezunlar', (req, res) => {
+    res.redirect('/')
+});
+
 app.get('/mezunlar/:year', (req, res) => {
     const year = req.params.year;
     const yearData = studentData.years[year];

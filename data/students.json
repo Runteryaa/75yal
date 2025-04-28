@@ -1,126 +1,72 @@
 {
   "years": {
-    "2022": {
+    "2025": {
       "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
       "classes": {
         "12-A": {
           "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
           "students": []
-        }
-      }
-    },
-    "2023": {
-      "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
-      "classes": {
-        "12-A": {
-          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
-          "students": [
-            {
-              "number": "1001",
-              "name": "Ahmet Yılmaz",
-              "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
-              "bio": "Okul futbol takımında kaptan olarak görev yaptı. İyi bir takım oyuncusu ve arkadaşı olarak hatırlanıyor. Mezuniyet sonrası mühendislik eğitimine devam etmek istiyor.",
-              "comments": [
-                {
-                  "text": "Ahmet her zaman çok yardımsever biriydi. Matematik ödevlerinde bana çok yardımcı oldu. Onu hiç unutmayacağım!",
-                  "author": "Ayşe Demir",
-                  "date": "15.04.2023"
-                },
-                {
-                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
-                  "author": "Mehmet Kaya",
-                  "date": "16.04.2023"
-                },
-                {
-                  "author": "asd",
-                  "text": "asdasda",
-                  "date": "27.04.2025"
-                },
-                {
-                  "author": "elma",
-                  "text": "adam",
-                  "date": "27.04.2025"
-                }
-              ]
-            }
-          ]
-        },
-        "12-B": {
-          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
-          "students": [
-            {
-              "number": "1002",
-              "name": "Ayşe Demir",
-              "image": "https://example.com/images/student2.jpg",
-              "bio": "Matematikte çok başarılı bir öğrenciydi ve arkadaşlarına her zaman yardımcı olurdu.",
-              "comments": []
-            },
-            {
-              "number": "1001",
-              "name": "Ahmet Yılmaz",
-              "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
-              "bio": "Okul futbol takımında kaptan olarak görev yaptı. İyi bir takım oyuncusu ve arkadaşı olarak hatırlanıyor. Mezuniyet sonrası mühendislik eğitimine devam etmek istiyor.",
-              "comments": [
-                {
-                  "text": "Ahmet her zaman çok yardımsever biriydi. Matematik ödevlerinde bana çok yardımcı oldu. Onu hiç unutmayacağım!",
-                  "author": "Ayşe Demir",
-                  "date": "15.04.2023"
-                },
-                {
-                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
-                  "author": "Mehmet Kaya",
-                  "date": "16.04.2023"
-                }
-              ]
-            },
-            {
-              "number": "1003",
-              "name": "Ahmet Yılmaz",
-              "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
-              "bio": "Okul futbol takımında kaptan olarak görev yaptı. İyi bir takım oyuncusu ve arkadaşı olarak hatırlanıyor. Mezuniyet sonrası mühendislik eğitimine devam etmek istiyor.",
-              "comments": [
-                {
-                  "text": "Ahmet her zaman çok yardımsever biriydi. Matematik ödevlerinde bana çok yardımcı oldu. Onu hiç unutmayacağım!",
-                  "author": "Ayşe Demir",
-                  "date": "15.04.2023"
-                },
-                {
-                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
-                  "author": "Mehmet Kaya",
-                  "date": "16.04.2023"
-                },
-                {
-                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
-                  "author": "Mehmet Kaya",
-                  "date": "16.04.2023"
-                },
-                {
-                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
-                  "author": "Mehmet Kaya",
-                  "date": "16.04.2023"
-                },
-                {
-                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
-                  "author": "Mehmet Kaya",
-                  "date": "16.04.2023"
-                },
-                {
-                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
-                  "author": "Mehmet Kaya",
-                  "date": "16.04.2023"
-                },
-                {
-                  "text": "Futbol maçlarında birlikte oynamak çok keyifliydi. En iyi takım kaptanıydı!",
-                  "author": "Mehmet Kaya",
-                  "date": "16.04.2023"
-                }
-              ]
-            }
-          ]
         },
         "12-C": {
           "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
           "students": []
+        },
+        "12-D": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": []
+        },
+        "12-E": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": []
+        },
+        "12-F": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": [
+            {
+              "number": "1101",
+              "name": "Enes Saraçoğlu",
+              "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+              "bio": "bio",
+              "socials": [
+                {
+                  "name": "Instagram",
+                  "link": "https://instagram.com/nnesflix"
+                },
+                {
+                  "name": "Github",
+                  "link": "https://github.com/Runteryaa"
+                }
+              ],
+              "comments": [
+                {
+                  "text": "yorumtest",
+                  "author": "testuser",
+                  "intagram": "https://instagram.com/",
+                  "date": "28.04.2025"
+                }
+              ]
+            },
+            {
+              "number": "628",
+              "name": "Ekrem Alıcı",
+              "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+              "bio": "bio",
+              "socials": [
+                {
+                  "name": "Instagram",
+                  "link": "https://instagram.com/ekremuu"
+                }
+              ],
+              "comments": [
+                {
+                  "text": "Aslan Gardaşım",
+                  "author": "Enes Saraçoğlu",
+                  "insta": "https://instagram.com/nnesflix",
+                  "date": "28.04.2025"
+                }
+              ]
+            }
+          ]
         }
       }
     }
