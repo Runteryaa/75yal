@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>75YALYıllık</h1>
+            <form action="/search" method="get" class="mezun-search">
+                <input type="text" name="q" placeholder="Mezun adı veya numarası" required>
+                <button type="submit">Ara</button>
+            </form>
+            <nav>
+                <ul>
+                    <li><a href="/">Ana Sayfa</a></li>
+                    <li><a href="/hakkinda">Hakkında</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="breadcrumb">
+        <a href="/">Ana Sayfa</a>
+        <span>></span>
+        <span>404</span>
+    </div>
+    <main class="container-center">
+        <h1 class="notfound-title">404</h1>
+        <p class="notfound-desc">Üzgünüz, aradığınız sayfa bulunamadı.</p>
+        <div class="notfound-link">
+            <a href="/">Ana Sayfa'ya dön</a>
+        </div>
+    </main>
+</body>
+</html>

@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="container">
-            <h1>75YALMezunları</h1>
+            <h1>75YALYıllık</h1>
             <form action="/search" method="get" class="mezun-search">
                 <input type="text" name="q" placeholder="Mezun adı veya numarası" required>
                 <button type="submit">Ara</button>
@@ -17,7 +17,6 @@
             <nav>
                 <ul>
                     <li><a href="/">Ana Sayfa</a></li>
-                    <li><a href="/bildir">Bildir</a></li>
                     <li><a href="/hakkinda">Hakkında</a></li>
                 </ul>
             </nav>
@@ -29,19 +28,22 @@
     </div>
     <main>
         <section class="intro">
-            <h2>75YALMezunları</h2>
-            <p>75YAL mezunlarının anılarını, fotoğraflarını ve arkadaşlarının yorumlarını keşfedin.</p>
+            <h2>75YAL Yıllık</h2>
+            <p>75YAL Mezunlarının anılarını, fotoğraflarını ve arkadaşlarının yorumlarını keşfedin.</p>
         </section>
         <section class="gallery">
             <h3>Mezuniyet Yılları</h3>
             <div class="cards">
-                <% years.forEach(year => { %>
-                <div class="card">
-                    <a href="/mezunlar/<%= year.year %>">
-                        <img src="<%= year.image %>" alt="<%= year.year %> Mezunları">
-                        <h4><%= year.year %> Mezunları</h4>
-                    </a>
-                </div>
+                <% years
+                    .slice() // orijinal diziyi bozmamak için kopya al
+                    .sort((a, b) => b.year - a.year) // büyükten küçüğe sırala
+                    .forEach(year => { %>
+                    <div class="card">
+                        <a href="/mezunlar/<%= year.year %>">
+                            <img src="<%= year.image %>" alt="<%= year.year %> Mezunları">
+                            <h4><%= year.year %> Mezunları</h4>
+                        </a>
+                    </div>
                 <% }); %>
             </div>
         </section>

@@ -243,10 +243,14 @@ header nav ul li a {
     color: #6c63ff;
 }
 
-.about-page {
+main{
     max-width: 1200px;
     margin: 2rem auto;
     padding: 0 1rem;
+}
+
+.container-center {
+    text-align: center;
 }
 
 .about-container {
@@ -376,4 +380,22 @@ header nav ul li a {
     .about-content h2 {
         font-size: 1.5rem;
     }
+}
+
+.notfound-title {
+    font-size: 2.5rem;
+    color: #6c54c8;
+    margin-bottom: 16px;
+}
+
+.notfound-desc {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 32px;
+}
+
+.notfound-link a { 
+    color: #4b3ca7;
+    text-decoration: underline;
+    font-weight: 500;
 }

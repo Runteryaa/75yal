@@ -7,24 +7,14 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Load student data
-const studentData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'students.json'), 'utf8'));
-
-// Set EJS as the view engine
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Serve static files
-app.use(express.static(path.join(__dirname, 'public')));
 
-// Place this before the dynamic routes
-app.get('/hakkinda', (req, res) => {
-    res.render('hakkinda', { 
-        title: 'Hakkında'
-    });
-});
+const studentData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'students.json'), 'utf8'));
 
-// Dynamic routes below...
 app.get('/', (req, res) => {
     const years = Object.entries(studentData.years).map(([year, yearData]) => ({
         year,
@@ -34,6 +24,12 @@ app.get('/', (req, res) => {
     res.render('index', { 
         title: 'Ana Sayfa',
         years
+    });
+});
+
+app.get('/hakkinda', (req, res) => {
+    res.render('hakkinda', { 
+        title: 'Hakkında'
     });
 });
 
@@ -76,7 +72,6 @@ app.get('/mezunlar/:year/:className', (req, res) => {
     });
 });
 
-// Change from '/:year/:className/:studentNumber' to '/mezunlar/:year/:className/:studentNumber'
 app.get('/mezunlar/:year/:className/:studentNumber', (req, res) => {
     const { year, className, studentNumber } = req.params;
     const students = studentData.years[year]?.classes?.[className]?.students;
@@ -121,45 +116,7 @@ app.get('/search', (req, res) => {
     res.render('search', { title: 'Mezun Ara', results, query });
 });
 
-const reviewPath = path.join(__dirname, 'data', 'review.json');
-app.use(express.urlencoded({ extended: true }));
-
-app.post('/yorum-ekle', (req, res) => {
-    const { year, className, studentNumber, author, text } = req.body;
-    if (!year || !className || !studentNumber || !author || !text) {
-        return res.status(400).send('Eksik bilgi');
-    }
-
-    const newReview = {
-        year,
-        className,
-        studentNumber,
-        author,
-        text,
-        date: new Date().toLocaleDateString('tr-TR'),
-        approved: false
-    };
-
-    let reviews = [];
-    try {
-        if (fs.existsSync(reviewPath)) {
-            reviews = JSON.parse(fs.readFileSync(reviewPath, 'utf8'));
-        }
-    } catch (err) {
-        reviews = [];
-    }
-    reviews.push(newReview);
-    fs.writeFileSync(reviewPath, JSON.stringify(reviews, null, 2), 'utf8');
-
-    try {
-        res.redirect(`/mezunlar/${year}/${className}/${studentNumber}`);
-    } catch (error) {
-        res.redirect(`/mezunlar/${year}/${className}/${studentNumber}`);
-    }
-});
-
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
-
 function parseCookies(req) {
     const list = {};
     const rc = req.headers.cookie;
@@ -188,7 +145,6 @@ app.get('/admin/login', (req, res) => {
     res.render('admin_login', { error: null });
 });
 
-
 app.post('/admin/login', (req, res) => {
     const { password } = req.body;
     if (password === ADMIN_PASSWORD) {
@@ -198,29 +154,8 @@ app.post('/admin/login', (req, res) => {
     res.render('admin_login', { error: 'Hatalı şifre' });
 });
 
-// Show the report form page
-app.get('/bildir', (req, res) => {
-    res.render('bildir', { success: false });
-});
-
-// Handle report form submissions
-app.post('/bildir', (req, res) => {
-    const { student, author, comment, reason } = req.body;
-    const reportPath = path.join(__dirname, 'data', 'reports.json');
-    let reports = [];
-    try {
-        if (fs.existsSync(reportPath)) {
-            reports = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
-        }
-    } catch (err) {
-        reports = [];
-    }
-    reports.push({
-        student, author, comment, reason,
-        date: new Date().toLocaleString('tr-TR')
-    });
-    fs.writeFileSync(reportPath, JSON.stringify(reports, null, 2), 'utf8');
-    res.send('Bildiriminiz alınmıştır. Teşekkürler!');
+app.use((req, res) => {
+    res.status(404).render('404', { title: 'Sayfa Bulunamadı' });
 });
 
 // Start the server
