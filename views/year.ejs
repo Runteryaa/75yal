@@ -8,8 +8,8 @@
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>75YALYıllık</h1>
+        <div class="navbar">
+            <a href="/"><h1>75YALYıllık</h1></a>
             <form action="/search" method="get" class="mezun-search">
                 <input type="text" name="q" placeholder="Mezun adı veya numarası" required>
                 <button type="submit">Ara</button>
@@ -35,7 +35,7 @@
             <p>Bu yıla ait sınıfları görüntüleyin ve anıları keşfedin.</p>
         </section>
 
-        <section class="classes">
+        <section class="content">
             <h3>Sınıflar</h3>
             <div class="cards">
                 <% classes.forEach(cls => { %>
