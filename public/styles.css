@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f9f9ff;
-  color: #333333;
+  color: #313133;
   overflow-y: scroll;
 }
 
@@ -13,6 +13,11 @@ header {
   color: #fcfcfc;
   text-align: center;
 }
+@media screen and (max-width: 900px) {
+  header {
+    padding: 0.5rem;
+  }
+}
 
 .navbar {
   display: flex;
@@ -21,6 +26,11 @@ header {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+}
+@media screen and (max-width: 900px) {
+  .navbar {
+    flex-direction: column;
+  }
 }
 .navbar a {
   text-decoration: none;
@@ -46,6 +56,38 @@ header {
   color: #fcfcfc;
   text-decoration: none;
 }
+.navbar .mezun-search {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  align-items: center;
+}
+.navbar .mezun-search input[type=text] {
+  padding: 6px 10px;
+  border: 2px solid #4b44b2;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 220px;
+  transition: border-color 0.2s;
+  background-color: #fcfcfc;
+}
+.navbar .mezun-search input[type=text]:focus {
+  border-color: #2b2766;
+  outline: none;
+}
+.navbar .mezun-search button {
+  padding: 8px 18px;
+  background: #4b44b2;
+  color: #fcfcfc;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.navbar .mezun-search button:hover {
+  background: #2b2766;
+}
 
 .breadcrumb {
   padding: 1rem;
@@ -58,7 +100,28 @@ header {
 }
 .breadcrumb span {
   margin: 0 0.5rem;
-  color: #666666;
+  color: #6f6f72;
+}
+
+h1 {
+  color: #6c62ff;
+}
+
+h2 {
+  color: #6c62ff;
+}
+
+h3 {
+  color: #6c62ff;
+}
+
+h4 {
+  color: #6c62ff;
+}
+
+a {
+  text-decoration: none;
+  color: #2b2766;
 }
 
 .intro {
@@ -67,13 +130,8 @@ header {
   max-width: 800px;
   margin: 0 auto;
 }
-.intro h2 {
-  color: #6c62ff;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
 .intro p {
-  color: #333333;
+  color: #313133;
   font-size: 1.1rem;
 }
 
@@ -86,8 +144,9 @@ header {
 
 .contentbox {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.331);
-  margin: auto 2rem;
+  margin: auto 5rem;
   padding: 2rem 2rem;
+  border-radius: 15px;
 }
 
 .cards {
@@ -103,9 +162,10 @@ header {
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.331);
   transition: transform 0.2s;
+  will-change: transform;
+  padding: 0px;
 }
 .cards .card a {
-  text-decoration: none;
   color: inherit;
   display: block;
 }
@@ -117,13 +177,13 @@ header {
 }
 .cards .card h4 {
   margin: 1rem;
-  color: #333333;
+  color: #313133;
   font-size: 1.2rem;
   text-align: center;
 }
 .cards .card p {
   margin: 0.5rem 1rem 1rem;
-  color: #666666;
+  color: #6f6f72;
   text-align: center;
   font-size: 0.9rem;
 }
@@ -132,38 +192,5 @@ header {
   font-weight: 500;
 }
 .cards .card:hover {
-  transform: translateY(-5px);
-}
-
-.mezun-search {
-  display: flex;
-  gap: 8px;
-  margin: 0;
-  align-items: center;
-}
-.mezun-search input[type=text] {
-  padding: 6px 10px;
-  border: 2px solid #544cc2;
-  border-radius: 4px;
-  font-size: 1rem;
-  width: 220px;
-  transition: border-color 0.2s;
-  background-color: #fcfcfc;
-}
-.mezun-search input[type=text]:focus {
-  border-color: #3f3a8d;
-  outline: none;
-}
-.mezun-search button {
-  padding: 8px 18px;
-  background: #544cc2;
-  color: #fcfcfc;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.mezun-search button:hover {
-  background: #3f3a8d;
+  transform: scale(1.03) translateY(-5px);
 }/*# sourceMappingURL=styles.css.map */
