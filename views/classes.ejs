@@ -8,8 +8,8 @@
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>75YALYıllık</h1>
+        <div class="navbar">
+            <a href="/"><h1>75YALYıllık</h1></a>
             <form action="/search" method="get" class="mezun-search">
                 <input type="text" name="q" placeholder="Mezun adı veya numarası" required>
                 <button type="submit">Ara</button>
@@ -17,7 +17,7 @@
             <nav>
                 <ul>
                     <li><a href="/">Ana Sayfa</a></li>
-                    <li><a href="/hakkimizda">Hakkında</a></li>
+                    <li><a href="/hakkinda">Hakkında</a></li>
                 </ul>
             </nav>
         </div>
@@ -34,12 +34,12 @@
 
     <main>
         <section class="intro">
-            <h2><%= year %> - <%= className %></h2>
+            <h1><%= year %> - <%= className %></h1>
             <p>Bu sınıftaki öğrencilere göz atın ve anıları paylaşın.</p>
         </section>
 
-        <section class="students">
-            <h3>Öğrenciler</h3>
+        <section class="content">
+            <h2>Öğrenciler</h2>
             <div class="cards">
                 <% students.forEach(student => { %>
                 <div class="card">
@@ -52,8 +52,10 @@
                 <% }); %>
             </div>
             <h3>Fotoğraflar</h3>
-            <div class="photos">
+            <div class="cards">
+
             </div>
+            <p>Yıl içinde çekilmiş fotoğraflar eklenecektir</p>
         </section>
     </main>
 </body>

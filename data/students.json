@@ -7,6 +7,102 @@
           "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
           "students": []
         },
+        "12-B": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": []
+        },
+        "12-C": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": []
+        },
+        "12-D": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": []
+        },
+        "12-E": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": []
+        },
+        "12-F": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": [
+            {
+              "number": "1101",
+              "name": "Enes Saraçoğlu",
+              "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+              "bio": "bio",
+              "socials": [
+                {
+                  "name": "Instagram",
+                  "link": "https://instagram.com/nnesflix"
+                },
+                {
+                  "name": "Github",
+                  "link": "https://github.com/Runteryaa"
+                }
+              ],
+              "comments": [
+                {
+                  "text": "yorumtest",
+                  "author": "testuser",
+                  "intagram": "https://instagram.com/",
+                  "date": "28.04.2025"
+                }
+              ]
+            },
+            {
+              "number": "628",
+              "name": "Ekrem Alıcı",
+              "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+              "bio": "bio",
+              "socials": [
+                {
+                  "name": "Instagram",
+                  "link": "https://instagram.com/ekremuu"
+                }
+              ],
+              "comments": [
+                {
+                  "text": "Aslan Gardaşım",
+                  "author": "Enes Saraçoğlu",
+                  "insta": "https://instagram.com/nnesflix",
+                  "date": "28.04.2025"
+                },
+                {
+                  "text": "Aslan Gardaşım",
+                  "author": "Enes Saraçoğlu",
+                  "insta": "https://instagram.com/nnesflix",
+                  "date": "28.04.2025"
+                },
+                {
+                  "text": "Aslan Gardaşım",
+                  "author": "Enes Saraçoğlu",
+                  "insta": "https://instagram.com/nnesflix",
+                  "date": "28.04.2025"
+                },
+                {
+                  "text": "Aslan Gardaşım",
+                  "author": "Enes Saraçoğlu",
+                  "insta": "https://instagram.com/nnesflix",
+                  "date": "28.04.2025"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "test": {
+      "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+      "classes": {
+        "12-A": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": []
+        },
+        "12-B": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": []
+        },
         "12-C": {
           "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
           "students": []
