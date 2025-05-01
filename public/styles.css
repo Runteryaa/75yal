@@ -13,7 +13,7 @@ header {
   color: #fcfcfc;
   text-align: center;
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 850px) {
   header {
     padding: 0.5rem;
   }
@@ -27,7 +27,7 @@ header {
   margin: 0 auto;
   padding: 0 20px;
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 850px) {
   .navbar {
     flex-direction: column;
   }
@@ -105,18 +105,22 @@ header {
 
 h1 {
   color: #6c62ff;
+  margin: 0px;
 }
 
 h2 {
   color: #6c62ff;
+  margin: 0px;
 }
 
 h3 {
   color: #6c62ff;
+  margin: 0px;
 }
 
 h4 {
   color: #6c62ff;
+  margin: 0px;
 }
 
 a {
@@ -124,11 +128,28 @@ a {
   color: #2b2766;
 }
 
+.abtn {
+  padding: 0.2em 0.4em;
+  background: #4b44b2;
+  color: #fcfcfc;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.abtn:hover {
+  background: #2b2766;
+}
+
 .intro {
   text-align: center;
   padding: 2rem;
   max-width: 800px;
   margin: 0 auto;
+}
+.intro h1 {
+  margin: 0px;
+  font-size: 38px;
 }
 .intro p {
   color: #313133;
@@ -141,17 +162,27 @@ a {
   padding: 2rem;
   text-align: center;
 }
+.content h2 {
+  color: #6c62ff;
+  font-size: 28px;
+}
 
 .contentbox {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.331);
-  margin: auto 5rem;
+  margin: 1rem 5rem;
   padding: 2rem 2rem;
-  border-radius: 15px;
+  border-radius: 8px;
+}
+@media screen and (max-width: 850px) {
+  .contentbox {
+    margin: 0 1rem 1rem 1rem;
+    padding: 1rem 1rem;
+  }
 }
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 2rem;
   justify-content: center;
   flex-wrap: wrap;
@@ -193,4 +224,64 @@ a {
 }
 .cards .card:hover {
   transform: scale(1.03) translateY(-5px);
+}
+
+.profile {
+  display: flex;
+  gap: 2rem;
+  background: #f9f9ff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.331);
+  margin: 1rem 5rem;
+  padding: 2rem 2rem;
+}
+@media screen and (max-width: 850px) {
+  .profile {
+    display: block;
+    flex-direction: column;
+    margin: 0 1rem 1rem 1rem;
+    padding: 1rem 1rem;
+  }
+  .profile .pinfo {
+    width: 100%;
+  }
+  .profile .pphoto img {
+    width: 100%;
+  }
+}
+.profile img {
+  width: 23rem;
+  border-radius: 8px;
+}
+.profile .socials {
+  margin: 0.5rem 0 1rem 0;
+}
+.profile .bio {
+  color: #313133;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0.5rem 0 1rem 0;
+}
+.profile .comment-info {
+  font-size: 12px;
+}
+.profile .comment {
+  background: #e0e0e5;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+.profile .comment-text {
+  color: #313133;
+  font-style: italic;
+  margin: 0 0.5rem 0.5rem 0;
+}
+.profile .comment-meta {
+  display: flex;
+  justify-content: space-between;
+  color: #6f6f72;
+  font-size: 0.9rem;
+}
+.profile .author {
+  color: #4b44b2;
 }/*# sourceMappingURL=styles.css.map */

@@ -7,6 +7,10 @@
           "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
           "students": []
         },
+        "12-B": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": []
+        },
         "12-C": {
           "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
           "students": []
@@ -63,6 +67,24 @@
                   "author": "Enes Saraçoğlu",
                   "insta": "https://instagram.com/nnesflix",
                   "date": "28.04.2025"
+                },
+                {
+                  "text": "Aslan Gardaşım",
+                  "author": "Enes Saraçoğlu",
+                  "insta": "https://instagram.com/nnesflix",
+                  "date": "28.04.2025"
+                },
+                {
+                  "text": "Aslan Gardaşım",
+                  "author": "Enes Saraçoğlu",
+                  "insta": "https://instagram.com/nnesflix",
+                  "date": "28.04.2025"
+                },
+                {
+                  "text": "Aslan Gardaşım",
+                  "author": "Enes Saraçoğlu",
+                  "insta": "https://instagram.com/nnesflix",
+                  "date": "28.04.2025"
                 }
               ]
             }
@@ -74,6 +96,10 @@
       "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
       "classes": {
         "12-A": {
+          "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
+          "students": []
+        },
+        "12-B": {
           "image": "https://preview--yillik-hatira-deposu.lovable.app/placeholder.svg",
           "students": []
         },

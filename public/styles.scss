@@ -9,7 +9,7 @@ $dgraycolor: #313133;
 
 $boxshadow: 0 2px 4px rgba(0, 0, 0, 0.331);
 @mixin mobile {
-   @media screen and (max-width: 900px) {
+   @media screen and (max-width: 850px) {
      @content;
    }
 }
@@ -107,8 +107,6 @@ header {
    }
 }
 
-
-
 .breadcrumb {
    padding: 1rem;
    max-width: 1200px;
@@ -126,18 +124,22 @@ header {
 
 h1 {
    color: $maincolor;
+   margin: 0px;
 }
 
 h2 {
    color: $maincolor;
+   margin: 0px;
 }
 
 h3 {
    color: $maincolor;
+   margin: 0px;
 }
 
 h4 {
    color: $maincolor;
+   margin: 0px;
 }
 
 a {
@@ -145,11 +147,27 @@ a {
    color: $ddmaincolor;
 }
 
+.abtn {
+   padding: .2em .4em;
+   background: $dmaincolor;
+   color: $whitecolor;
+   border-radius: 4px;
+   text-decoration: none;
+   transition: background 0.2s;
+}
+.abtn:hover {
+   background: $ddmaincolor;
+}
+
 .intro {
    text-align: center;
    padding: 2rem;
    max-width: 800px;
    margin: 0 auto;
+   h1 {
+      margin: 0px;
+      font-size: 38px;
+   }
    p {
       color: $dgraycolor;
       font-size: 1.1rem;
@@ -162,18 +180,27 @@ a {
    padding: 2rem;
    text-align: center;
    
+   h2 {
+      color: $maincolor;
+      font-size: 28px;
+   }
 }
 
 .contentbox {
    box-shadow: $boxshadow;
-   margin: auto 5rem;
+   margin: 1rem 5rem;
    padding: 2rem 2rem;
-   border-radius: 15px;
+   border-radius: 8px;
+
+   @include mobile {
+      margin: 0 1rem 1rem 1rem;
+      padding: 1rem 1rem;
+   }
 }
 
 .cards {
    display: grid;
-   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
    gap: 2rem;
    justify-content: center;
    flex-wrap: wrap;
@@ -220,3 +247,64 @@ a {
 }
 
 
+.profile {
+   display: flex;
+   gap: 2rem;
+   background: $bgcolor;
+   border-radius: 8px;
+   box-shadow: $boxshadow;
+   margin: 1rem 5rem;
+   padding: 2rem 2rem;
+
+   @include mobile {
+      display: block;
+      flex-direction: column;
+      margin: 0 1rem 1rem 1rem;
+      padding: 1rem 1rem;
+
+      .pinfo {
+         width: 100%;
+      }
+      .pphoto img {
+         width: 100%;
+      }
+   }
+
+   img {
+      width: 23rem;
+      border-radius: 8px;
+   }
+   .socials {
+      margin: .5rem 0 1rem 0;
+   }
+
+   .bio {
+      color: $dgraycolor;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin: 0.5rem 0 1rem 0;
+   }
+   .comment-info {
+      font-size: 12px;
+   }
+   .comment {
+      background: $lgray;
+      border-radius: 8px;
+      padding: .5rem;
+      margin-bottom: 1rem;
+   }
+   .comment-text {
+      color: $dgraycolor;
+      font-style: italic;
+      margin: 0 0.5rem 0.5rem 0;
+   }
+   .comment-meta {
+      display: flex;
+      justify-content: space-between;
+      color: $graycolor;
+      font-size: 0.9rem;
+   }
+   .author {
+      color: $dmaincolor;
+   }
+}
