@@ -48,20 +48,25 @@
             <div class="pinfo">
                 <h1><%= student.name %></h1>
                 <p class="bio"><%= student.bio %></p>
+                <div class="info"><h4>Bölüm:&nbsp;</h4><p><%= student.department %></p></div>
+
                 <section class="comments">
                     <h2>Yorumlar</h2>
-                    <!-- Yorum ekle formu -->
-                    <p class="comment-info">*Yorum eklemek/kaltırmak için bize instagram adresimizden <a href="https://instagram.com/yillik75yal">(@yillik75yal)</a> yazabilirsiniz. Bunun nedeni gerçekten siz olduğunuzu doğrulamak. (Yorum gerçekten bir sorun teşkil etmediği sürece kaldırılmaz.)</p>
+                    <p class="comment-info">*Yorum eklemek/kaltırmak için bize instagram adresimizden <a href="https://instagram.com/yillik75yal" target="_blank">(@yillik75yal)</a> yazabilirsiniz. Bunun nedeni gerçekten siz olduğunuzu doğrulamak. (Yorum geçerli bir sebep sunulmadığı sürece kaldırılmaz.)</p>
                     <div class="comment-list">
-                        <% student.comments.forEach(comment => { %>
-                        <div class="comment">
-                            <p class="comment-text"><%= comment.text %></p>
-                            <div class="comment-meta">
-                                <a href="<%= comment.insta %>" class="author"><%= comment.author %></a>
-                                <span class="date"><%= comment.date %></span>
-                            </div>
-                        </div>
-                        <% }); %>
+                        <% if (student.comments && student.comments.length > 0) { %>
+                            <% student.comments.forEach(comment => { %>
+                                <div class="comment">
+                                    <p class="comment-text"><%= comment.text %></p>
+                                    <div class="comment-meta">
+                                        <a class="author" href="<%= comment.insta %>" target="_blank"><%= comment.author %></a>
+                                        <span class="date"><%= comment.date %></span>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <p class="comment">Henüz yorum yok.</p>
+                        <% } %>
                     </div>
                 </section>
             </div>

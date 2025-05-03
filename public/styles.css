@@ -123,20 +123,19 @@ h4 {
   margin: 0px;
 }
 
-a {
-  text-decoration: none;
+a[target=_blank] {
   color: #2b2766;
+  font-style: italic;
 }
 
 .abtn {
   padding: 0.2em 0.4em;
   background: #4b44b2;
-  color: #fcfcfc;
+  color: #fcfcfc !important;
   border-radius: 4px;
   text-decoration: none;
   transition: background 0.2s;
 }
-
 .abtn:hover {
   background: #2b2766;
 }
@@ -165,6 +164,13 @@ a {
 .content h2 {
   color: #6c62ff;
   font-size: 28px;
+  margin-bottom: 1rem;
+}
+.content h2:nth-child(n+2) {
+  margin-top: 3rem;
+}
+.content p {
+  margin: 0;
 }
 
 .contentbox {
@@ -199,6 +205,7 @@ a {
 .cards .card a {
   color: inherit;
   display: block;
+  text-decoration: none;
 }
 .cards .card img {
   width: 100%;
@@ -259,11 +266,13 @@ a {
 .profile .bio {
   color: #313133;
   font-size: 1.1rem;
-  line-height: 1.6;
   margin: 0.5rem 0 1rem 0;
 }
 .profile .comment-info {
   font-size: 12px;
+}
+.profile .comment-list {
+  width: 100%;
 }
 .profile .comment {
   background: #e0e0e5;
@@ -284,4 +293,38 @@ a {
 }
 .profile .author {
   color: #4b44b2;
+}
+.profile .info {
+  display: flex;
+  align-items: baseline;
+}
+.profile .info p {
+  color: #313133;
+  font-size: 1rem;
+  margin: 0;
+}
+
+#first-visit {
+  display: none;
+  width: 500px;
+  height: 200px;
+  position: fixed;
+  background: #6c62ff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.331);
+  text-align: center;
+  padding: 20px;
+  top: 40%;
+  z-index: 9999;
+  border-radius: 8px;
+  color: #0c0c0c;
+}
+@media screen and (max-width: 850px) {
+  #first-visit {
+    width: 75%;
+    top: 5em;
+    height: 50%;
+  }
+}
+#first-visit a {
+  color: #fcfcfc;
 }/*# sourceMappingURL=styles.css.map */
