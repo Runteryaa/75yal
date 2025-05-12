@@ -14,3 +14,11 @@ closeFirstVisit = function() {
         infoDiv.style.display = 'none';
     }
 }
+
+function copy(id) {
+  var copyText = id
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(copyText.value);
+  alert("Copied the text: " + copyText.value);
+}
