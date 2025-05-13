@@ -5,21 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel="stylesheet" href="/styles.css">
-
-
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <div class="navbar">
             <a href="/"><h1>75YALYıllık</h1></a>
             <form action="/search" method="get" class="mezun-search">
-                <input type="text" name="q" placeholder="Mezun adı veya numarası" required>
+                <input type="text" name="q" placeholder="Ad, Numara veya Instagram" required>
                 <button type="submit">Ara</button>
             </form>
             <nav>
                 <ul>
-                    <li><a href="/">Ana Sayfa</a></li>
+                    <li><a href="/">Ana Sayfa</a></li>
                     <li><a href="/hakkinda">Hakkında</a></li>
+                    <li><a href="https://instagram.com/yillik75">Instagram</a></li>
                 </ul>
             </nav>
         </div>
@@ -51,22 +54,21 @@
         </section>
     </main>
     <div class="content">
-        <h2>Projeyi Destekle!</h2>
         <div class="cards">
             <div class="card">
                 <a href="https://papara.com/donate/Runterya" target="_blank">
-                    <img style="width: unset;height: 100px;" src="https://play-lh.googleusercontent.com/ltAVHVLCnqC3CRnlZOa49JyavXwJ1Dj1aEvdIfaOpLdbEtFk1ce5hFKujLtwJ2vnlg8=w240-h480-rw" alt="Papara">
-                    <h4>Papara ile Bağış Yap</h4>
+                    <h4>Projeye Destek Ol!</h4>
                 </a>
             </div>
         </div>
+    </div>
     <dialog id="first-visit">
         <p>Yıllığımızı ilk ziyaret edişiniz, hoşgeldiniz!</p>
         <p>Öncelikle bu projeye okulumuz tarafından izin verilmiştir. </p>
         <p>Bu internet sitesi, 75YAL mezunlarının anılarını ve fotoğraflarını ücretsiz bir şekilde paylaşması için tasarlanmıştır. Ayrıca, mezunlar ile sosyal medya bağlantıları ile kolay bir şekilde bağlantı kurabilirsiniz.</p>
-        
-        <p>Kendinizi ekletmek için bize instagram adresimizden <a href="https://instagram.com/yillik75yal">(@yillik75yal)</a> ulaşın.</p>
-
+        <br>
+        <p>Kendinizi ekletmek için bize instagram adresimizden <a href="https://instagram.com/yillik75">(@yillik75)</a> ulaşın.</p>
+        <br>
         <p>Lütfen daha fazla bilgi için <a href="/hakkinda">/Hakkında</a> sayfasını göz atın edin.</p>
         <button onclick="closeFirstVisit()">Kapat</button>
     </dialog>

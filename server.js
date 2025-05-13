@@ -104,8 +104,9 @@ app.get('/search', (req, res) => {
             for (const student of classData.students) {
                 if (
                     student.name.toLowerCase().includes(query) ||
-                    student.number === query
-                ) {
+                    student.number === query ||
+                    ( Array.isArray(student.socials) && student.socials.some( s => s.name.toLowerCase() === 'instagram' && ( (s.link && s.link.toLowerCase().includes(query)) || (s.username && s.username.toLowerCase().includes(query)) ) ) )                ) {
+                    
                     results.push({
                         year,
                         className,
@@ -156,6 +157,11 @@ app.post('/admin/login', (req, res) => {
     }
     res.render('admin_login', { error: 'Hatalı şifre' });
 });
+
+app.get('/admin/json', requireAdmin, (req, res) => {
+    res.render('admin_json', { title: 'JSON | Admin Paneli' });
+});
+
 
 app.use((req, res) => {
     res.status(404).render('404', { title: 'Sayfa Bulunamadı' });

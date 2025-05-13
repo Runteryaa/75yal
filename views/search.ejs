@@ -15,13 +15,14 @@
         <div class="navbar">
             <a href="/"><h1>75YALYıllık</h1></a>
             <form action="/search" method="get" class="mezun-search">
-                <input type="text" name="q" placeholder="Mezun adı veya numarası" value="<%= query || '' %>" required>
+                <input type="text" name="q" placeholder="Ad, Numara veya Instagram" required>
                 <button type="submit">Ara</button>
             </form>
             <nav>
                 <ul>
-                    <li><a href="/">Ana Sayfa</a></li>
+                    <li><a href="/">Ana Sayfa</a></li>
                     <li><a href="/hakkinda">Hakkında</a></li>
+                    <li><a href="https://instagram.com/yillik75">Instagram</a></li>
                 </ul>
             </nav>
         </div>
@@ -67,7 +68,9 @@
         <p>Yıllığımızı ilk ziyaret edişiniz, hoşgeldiniz!</p>
         <p>Öncelikle bu projeye okulumuz tarafından izin verilmiştir. </p>
         <p>Bu internet sitesi, 75YAL mezunlarının anılarını ve fotoğraflarını ücretsiz bir şekilde paylaşması için tasarlanmıştır. Ayrıca, mezunlar ile sosyal medya bağlantıları ile kolay bir şekilde bağlantı kurabilirsiniz.</p>
- 
+        <br>
+        <p>Kendinizi ekletmek için bize instagram adresimizden <a href="https://instagram.com/yillik75">(@yillik75)</a> ulaşın.</p>
+        <br>
         <p>Lütfen daha fazla bilgi için <a href="/hakkinda">/Hakkında</a> sayfasını göz atın edin.</p>
         <button onclick="closeFirstVisit()">Kapat</button>
     </dialog>

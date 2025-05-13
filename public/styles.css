@@ -1,12 +1,5 @@
-@font-face {
-  font-family: "Montserrat";
-  src: local("Montserrat"), local("Montserrat"), url("Montserrat.woff2") format("woff2"), url("Montserrat.woff") format("woff");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
 body {
-  font-family: Montserrat;
+  font-family: Montserrat, Arial;
   margin: 0;
   padding: 0;
   background-color: #f9f9ff;
@@ -47,7 +40,7 @@ header {
   margin: 0;
   font-size: 24px;
 }
-.navbar nav ul {
+.navbar ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -55,11 +48,7 @@ header {
   justify-content: center;
   gap: 15px;
 }
-.navbar nav ul li {
-  display: inline-block;
-  margin-right: 1rem;
-}
-.navbar nav ul li a {
+.navbar ul li a {
   color: #fcfcfc;
   text-decoration: none;
 }
