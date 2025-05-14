@@ -1,11 +1,13 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 require('dotenv').config();
 
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
@@ -158,10 +160,13 @@ app.post('/admin/login', (req, res) => {
     res.render('admin_login', { error: 'Hatalı şifre' });
 });
 
+app.get('/data.json', cors(), (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'data.json'));
+});
+
 app.get('/admin/json', requireAdmin, (req, res) => {
     res.render('admin_json', { title: 'JSON | Admin Paneli' });
 });
-
 
 app.use((req, res) => {
     res.status(404).render('404', { title: 'Sayfa Bulunamadı' });

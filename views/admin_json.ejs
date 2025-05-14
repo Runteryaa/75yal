@@ -44,7 +44,7 @@
     }
   </style>
 </head>
-<body><h2>Yıllık JSON Editor</h2><label for="yearSelect">Yıl Seçin:</label> <select id="yearSelect"></select>
+<body><a href="/admin"><h2>Yıllık JSON Editor</h2></a><label for="yearSelect">Yıl Seçin:</label> <select id="yearSelect"></select>
 
 <label for="classSelect">Sınıf Seçin:</label> <select id="classSelect"></select>
 
@@ -55,18 +55,7 @@
 <input id="bio" placeholder="Biyografi" />
 <input id="department" placeholder="Bölüm" /><h4>Sosyal Medya (Ad + Link)</h4>
 <div class="inline-group">
-  <input id="socialName" placeholder="Sosyal Medya Adı" />
-  <input id="socialLink" placeholder="Sosyal Medya Linki" />
-</div>
-<button onclick="addSocial()">Sosyal Medya Ekle</button>
-<div id="socialsPreview" class="socials-preview"></div><button onclick="addStudent()">Öğrenci Ekle</button>
-
-<h3>Öğrenciye Yorum Ekle</h3>
-<select id="commentTarget"></select>
-<input id="commentText" placeholder="Yorum Metni" />
-<input id="commentAuthor" placeholder="Yorum Yapan" /><h4>Yorum Yapanın Sosyal Medyası</h4>
-<div class="inline-group">
-  <select id="commentSocialSelect" onchange="handleSocialSelect()">
+  <select id="studentSocialSelect" onchange="handleStudentSocialSelect()">
     <option value="">Seçiniz</option>
     <option value="Instagram">Instagram</option>
     <option value="TikTok">TikTok</option>
@@ -76,9 +65,17 @@
     <option value="LinkedIn">LinkedIn</option>
     <option value="ozel">Özel</option>
   </select>
-  <input id="commentSocialCustom" placeholder="Özel Sosyal Medya Adı" style="display:none;" />
-  <input id="commentInsta" placeholder="Kullanıcı Adı veya Link" />
+  <input id="studentSocialCustom" placeholder="Özel Sosyal Medya Adı" style="display:none;" />
+  <input id="studentSocialValue" placeholder="Kullanıcı Adı veya Link" />
 </div>
+<button onclick="addSocial()">Sosyal Medya Ekle</button>
+<div id="socialsPreview" class="socials-preview"></div><button onclick="addStudent()">Öğrenci Ekle</button>
+
+<h3>Öğrenciye Yorum Ekle</h3>
+<select id="commentTarget"></select>
+<input id="commentText" placeholder="Yorum Metni" />
+<input id="commentAuthor" placeholder="Yorum Yapan" />
+<input id="commentInsta" placeholder="Instagram Kullanıcı Adı veya Link" />
 <input id="commentDate" type="date" />
 <button onclick="addComment()">Yorum Ekle</button><h3>Oluşturulan JSON</h3>
 <textarea id="outputJson" readonly></textarea>
@@ -116,13 +113,35 @@ function populateStudents() {
 }
 
 function addSocial() {
-  const name = document.getElementById('socialName').value;
-  const link = document.getElementById('socialLink').value;
-  if (!name || !link) return;
+  let name = document.getElementById('studentSocialSelect').value;
+  const custom = document.getElementById('studentSocialCustom').value;
+  const valueRaw = document.getElementById('studentSocialValue').value.trim();
+
+  if (!name) return;
+  if (name === 'ozel') name = custom;
+  if (!name || !valueRaw) return;
+
+  const baseUrls = {
+    Instagram: "https://instagram.com/",
+    TikTok: "https://tiktok.com/@",
+    YouTube: "https://youtube.com/@",
+    Twitter: "https://twitter.com/",
+    GitHub: "https://github.com/",
+    LinkedIn: "https://linkedin.com/in/"
+  };
+
+  let link = valueRaw;
+  if (baseUrls[name] && !/^https?:\/\//i.test(valueRaw)) {
+    link = baseUrls[name] + valueRaw.replace(/^@/, "");
+  }
+
   socials.push({ name, link });
   document.getElementById('socialsPreview').innerText = JSON.stringify(socials, null, 2);
-  document.getElementById('socialName').value = '';
-  document.getElementById('socialLink').value = '';
+
+  document.getElementById('studentSocialSelect').value = '';
+  document.getElementById('studentSocialCustom').value = '';
+  document.getElementById('studentSocialValue').value = '';
+  handleStudentSocialSelect();
 }
 
 function addStudent() {
@@ -153,6 +172,16 @@ function handleSocialSelect() {
   }
 }
 
+function handleStudentSocialSelect() {
+  const selected = document.getElementById('studentSocialSelect').value;
+  const custom = document.getElementById('studentSocialCustom');
+  if (selected === 'ozel') {
+    custom.style.display = 'block';
+  } else {
+    custom.style.display = 'none';
+  }
+}
+
 function addComment() {
   const year = document.getElementById('yearSelect').value;
   const className = document.getElementById('classSelect').value;
@@ -160,16 +189,12 @@ function addComment() {
   const index = parseInt(document.getElementById('commentTarget').value);
   const text = document.getElementById('commentText').value;
   const author = document.getElementById('commentAuthor').value;
-  let name = document.getElementById('commentSocialSelect').value;
-  const custom = document.getElementById('commentSocialCustom').value;
-  const linkRaw = document.getElementById('commentInsta').value;
+  const linkRaw = document.getElementById('commentInsta').value.trim();
   const date = document.getElementById('commentDate').value.split('-').reverse().join('.');
 
-  if (name === 'ozel') name = custom;
-
   let link = linkRaw;
-  if (name === 'Instagram' && !linkRaw.includes('http')) {
-    link = `https://instagram.com/${linkRaw}`;
+  if (linkRaw && !/^https?:\/\//i.test(linkRaw)) {
+    link = "https://instagram.com/" + linkRaw.replace(/^@/, "");
   }
 
   const comment = { text, author, insta: link, date };
@@ -180,9 +205,6 @@ function addComment() {
   document.getElementById('commentAuthor').value = '';
   document.getElementById('commentInsta').value = '';
   document.getElementById('commentDate').value = '';
-  document.getElementById('commentSocialSelect').value = '';
-  document.getElementById('commentSocialCustom').value = '';
-  handleSocialSelect();
   updateOutput();
 }
 
