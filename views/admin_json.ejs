@@ -5,15 +5,20 @@
   <title>Yıllık JSON Editor</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; }
-    input, textarea, select { width: 100%; margin-bottom: 10px; padding: 8px; }
+    input, textarea, select, button { width: 100%; margin-bottom: 10px; padding: 8px; }
     .student { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
-    .add-btn { margin-top: 10px; padding: 10px; }
-    #outputJson { width: 100%; height: 200px; }
+    .socials-preview { font-size: 14px; background: #f9f9f9; padding: 5px; }
+    .inline-group input { width: 49%; display: inline-block; }
+    .inline-group input:first-child { margin-right: 2%; }
+    #outputJson { height: 200px; }
   </style>
 </head>
 <body>
 
 <h2>Yıllık JSON Editor</h2>
+
+<label for="yearSelect">Select Year:</label>
+<select id="yearSelect"></select>
 
 <label for="classSelect">Select Class:</label>
 <select id="classSelect"></select>
@@ -26,8 +31,24 @@
 <input id="image" placeholder="Image URL">
 <input id="bio" placeholder="Bio">
 <input id="department" placeholder="Department">
-<textarea id="socials" placeholder='Socials (JSON format) e.g. [{"name":"Instagram","link":"..."}]'></textarea>
-<button class="add-btn" onclick="addStudent()">Add Student</button>
+
+<h4>Add Social Link</h4>
+<div class="inline-group">
+  <input id="socialName" placeholder="Social Name (e.g. Instagram)">
+  <input id="socialLink" placeholder="Social Link (e.g. https://...)">
+</div>
+<button onclick="addSocial()">Add Social</button>
+<div id="socialsPreview" class="socials-preview"></div>
+
+<button onclick="addStudent()">Add Student</button>
+
+<h3>Add Comment to Student</h3>
+<select id="commentTarget"></select>
+<input id="commentText" placeholder="Comment Text">
+<input id="commentAuthor" placeholder="Author Name">
+<input id="commentInsta" placeholder="Author Instagram Link">
+<input id="commentDate" placeholder="Date (e.g. 14.05.2025)">
+<button onclick="addComment()">Add Comment</button>
 
 <h3>Exported JSON</h3>
 <textarea id="outputJson" readonly></textarea>
@@ -35,22 +56,38 @@
 
 <script>
 let data = {};
+let socialsBuffer = [];
+
+const yearSelect = document.getElementById("yearSelect");
 const classSelect = document.getElementById("classSelect");
 const studentList = document.getElementById("studentList");
 const outputJson = document.getElementById("outputJson");
+const socialsPreview = document.getElementById("socialsPreview");
 
 async function fetchData() {
   try {
     const response = await fetch("https://yillik75.com.tr/data.json");
     data = await response.json();
-    populateClassSelect();
+    populateYearSelect();
   } catch (error) {
     alert("Failed to fetch JSON data: " + error);
   }
 }
 
+function populateYearSelect() {
+  yearSelect.innerHTML = "";
+  for (const year in data.years) {
+    const option = document.createElement("option");
+    option.value = year;
+    option.text = year;
+    yearSelect.appendChild(option);
+  }
+  populateClassSelect();
+}
+
 function populateClassSelect() {
-  const classes = data.years["2025"].classes;
+  const year = yearSelect.value;
+  const classes = data.years[year].classes;
   classSelect.innerHTML = "";
   for (const className in classes) {
     const option = document.createElement("option");
@@ -62,9 +99,11 @@ function populateClassSelect() {
 }
 
 function renderStudents() {
+  const year = yearSelect.value;
   const className = classSelect.value;
-  const students = data.years["2025"].classes[className].students;
+  const students = data.years[year].classes[className].students;
   studentList.innerHTML = "";
+
   students.forEach((student, index) => {
     const div = document.createElement("div");
     div.className = "student";
@@ -72,31 +111,57 @@ function renderStudents() {
       <strong>${student.name}</strong> (${student.number})<br>
       Department: ${student.department}<br>
       Bio: ${student.bio}<br>
-      <small>Socials: ${JSON.stringify(student.socials)}</small>
+      <small>Socials: ${JSON.stringify(student.socials)}</small><br>
+      ${student.comments ? formatComments(student.comments) : ""}
     `;
     studentList.appendChild(div);
   });
+
+  updateCommentTargetOptions();
   outputJson.value = JSON.stringify(data, null, 2);
 }
 
-function addStudent() {
-  const className = classSelect.value;
-  const students = data.years["2025"].classes[className].students;
-  try {
-    const student = {
-      number: document.getElementById("number").value,
-      name: document.getElementById("name").value,
-      image: document.getElementById("image").value,
-      bio: document.getElementById("bio").value,
-      department: document.getElementById("department").value,
-      socials: JSON.parse(document.getElementById("socials").value)
-    };
-    students.push(student);
-    renderStudents();
-    clearForm();
-  } catch (error) {
-    alert("Invalid JSON in socials field: " + error);
+function formatComments(comments) {
+  return `<div style="margin-top: 5px;"><strong>Comments:</strong><ul>` +
+    comments.map(c => `<li>${c.text} — <em>${c.author}</em> (${c.date})</li>`).join('') +
+    `</ul></div>`;
+}
+
+function addSocial() {
+  const name = document.getElementById("socialName").value.trim();
+  const link = document.getElementById("socialLink").value.trim();
+  if (name && link) {
+    socialsBuffer.push({ name, link });
+    updateSocialsPreview();
+    document.getElementById("socialName").value = "";
+    document.getElementById("socialLink").value = "";
+  } else {
+    alert("Please enter both name and link.");
   }
+}
+
+function updateSocialsPreview() {
+  socialsPreview.textContent = JSON.stringify(socialsBuffer);
+}
+
+function addStudent() {
+  const year = yearSelect.value;
+  const className = classSelect.value;
+  const students = data.years[year].classes[className].students;
+
+  const student = {
+    number: document.getElementById("number").value,
+    name: document.getElementById("name").value,
+    image: document.getElementById("image").value,
+    bio: document.getElementById("bio").value,
+    department: document.getElementById("department").value,
+    socials: [...socialsBuffer]
+  };
+  students.push(student);
+  socialsBuffer = [];
+  updateSocialsPreview();
+  renderStudents();
+  clearForm();
 }
 
 function clearForm() {
@@ -105,7 +170,46 @@ function clearForm() {
   document.getElementById("image").value = "";
   document.getElementById("bio").value = "";
   document.getElementById("department").value = "";
-  document.getElementById("socials").value = "";
+}
+
+function updateCommentTargetOptions() {
+  const year = yearSelect.value;
+  const className = classSelect.value;
+  const students = data.years[year].classes[className].students;
+  const commentTarget = document.getElementById("commentTarget");
+  commentTarget.innerHTML = "";
+  students.forEach((student, i) => {
+    const option = document.createElement("option");
+    option.value = i;
+    option.text = `${student.name} (${student.number})`;
+    commentTarget.appendChild(option);
+  });
+}
+
+function addComment() {
+  const year = yearSelect.value;
+  const className = classSelect.value;
+  const students = data.years[year].classes[className].students;
+  const index = document.getElementById("commentTarget").value;
+
+  const text = document.getElementById("commentText").value;
+  const author = document.getElementById("commentAuthor").value;
+  const insta = document.getElementById("commentInsta").value;
+  const date = document.getElementById("commentDate").value || new Date().toLocaleDateString('tr-TR');
+
+  const comment = { text, author, insta, date };
+  if (!students[index].comments) students[index].comments = [];
+  students[index].comments.push(comment);
+
+  renderStudents();
+  clearCommentForm();
+}
+
+function clearCommentForm() {
+  document.getElementById("commentText").value = "";
+  document.getElementById("commentAuthor").value = "";
+  document.getElementById("commentInsta").value = "";
+  document.getElementById("commentDate").value = "";
 }
 
 function copyToClipboard() {
@@ -114,6 +218,7 @@ function copyToClipboard() {
   alert("JSON copied to clipboard!");
 }
 
+yearSelect.addEventListener("change", populateClassSelect);
 classSelect.addEventListener("change", renderStudents);
 
 fetchData();
