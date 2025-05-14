@@ -2,9 +2,12 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
+const axios = require('axios');
+const multer = require('multer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const upload = multer({ storage: multer.memoryStorage() });
 require('dotenv').config();
 
 app.use(cors());
@@ -166,6 +169,29 @@ app.get('/data.json', cors(), (req, res) => {
 
 app.get('/admin/json', requireAdmin, (req, res) => {
     res.render('admin_json', { title: 'JSON | Admin Paneli' });
+});
+
+app.post('/upload-image', upload.single('image'), async (req, res) => {
+    try {
+        const apiKey = process.env.IMGBB_API;
+        if (!apiKey) return res.status(500).json({ error: 'IMGBB API key missing' });
+
+        const imageBase64 = req.file.buffer.toString('base64');
+        const response = await axios.post('https://api.imgbb.com/1/upload', null, {
+            params: {
+                key: apiKey,
+                image: imageBase64
+            }
+        });
+
+        if (response.data && response.data.data && response.data.data.url) {
+            return res.json({ url: response.data.data.url });
+        } else {
+            return res.status(500).json({ error: 'Upload failed' });
+        }
+    } catch (err) {
+        return res.status(500).json({ error: 'Upload error', details: err.message });
+    }
 });
 
 app.use((req, res) => {

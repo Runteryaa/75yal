@@ -51,7 +51,11 @@
 <div id="studentList"></div><h3>Yeni Öğrenci Ekle</h3>
 <input id="number" placeholder="Öğrenci Numarası" />
 <input id="name" placeholder="Ad Soyad" />
-<input id="image" placeholder="Görsel URL" />
+<form id="imageUploadForm" enctype="multipart/form-data" style="margin-bottom:10px;">
+  <input type="file" id="imageUpload" name="image" accept="image/*" />
+  <button type="submit">Fotoğrafı Yükle</button>
+</form>
+<input id="image" placeholder="Görsel URL" readonly />
 <input id="bio" placeholder="Biyografi" />
 <input id="department" placeholder="Bölüm" /><h4>Sosyal Medya (Ad + Link)</h4>
 <div class="inline-group">
@@ -218,6 +222,52 @@ function copyToClipboard() {
   document.execCommand('copy');
   alert('JSON kopyalandı!');
 }
+
+// Set current date automatically for commentDate input
+document.addEventListener('DOMContentLoaded', function() {
+  const dateInput = document.getElementById('commentDate');
+  if (dateInput) {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    dateInput.value = `${yyyy}-${mm}-${dd}`;
+  }
+});
+
+document.getElementById('imageUploadForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const fileInput = document.getElementById('imageUpload');
+    const file = fileInput.files[0];
+    if (!file) {
+        alert('Lütfen bir fotoğraf seçin.');
+        return;
+    }
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const btn = this.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Yükleniyor...';
+
+    try {
+        const res = await fetch('/upload-image', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+        if (data.url) {
+            document.getElementById('image').value = data.url;
+            alert('Fotoğraf başarıyla yüklendi!');
+        } else {
+            alert('Yükleme başarısız: ' + (data.error || ''));
+        }
+    } catch (err) {
+        alert('Yükleme sırasında bir hata oluştu!');
+    }
+    btn.disabled = false;
+    btn.textContent = 'Fotoğrafı Yükle';
+});
 
 loadJSON();
 </script>
