@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Yıllık JSON Editor</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    input, textarea, select, button { width: 100%; margin-bottom: 10px; padding: 8px; }
-    .student { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
-    .socials-preview { font-size: 14px; background: #f9f9f9; padding: 5px; }
-    .inline-group input { width: 49%; display: inline-block; }
-    .inline-group input:first-child { margin-right: 2%; }
-    #outputJson { height: 200px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    input, textarea, select, button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    .student {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background: #f9f9f9;
+    }
+    .socials-preview {
+      font-size: 14px;
+      background: #eee;
+      padding: 6px;
+      white-space: pre-wrap;
+    }
+    .inline-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .inline-group input {
+      flex: 1 1 48%;
+    }
+    #outputJson {
+      height: 200px;
+    }
   </style>
 </head>
 <body>
@@ -26,16 +57,16 @@
 <div id="studentList"></div>
 
 <h3>Add New Student</h3>
-<input id="number" placeholder="Student Number">
-<input id="name" placeholder="Name">
-<input id="image" placeholder="Image URL">
-<input id="bio" placeholder="Bio">
-<input id="department" placeholder="Department">
+<input id="number" placeholder="Student Number" />
+<input id="name" placeholder="Name" />
+<input id="image" placeholder="Image URL" />
+<input id="bio" placeholder="Bio" />
+<input id="department" placeholder="Department" />
 
-<h4>Add Social Link</h4>
+<h4>Socials (name + link)</h4>
 <div class="inline-group">
-  <input id="socialName" placeholder="Social Name (e.g. Instagram)">
-  <input id="socialLink" placeholder="Social Link (e.g. https://...)">
+  <input id="socialName" placeholder="Social Name" />
+  <input id="socialLink" placeholder="Social Link" />
 </div>
 <button onclick="addSocial()">Add Social</button>
 <div id="socialsPreview" class="socials-preview"></div>
@@ -44,10 +75,10 @@
 
 <h3>Add Comment to Student</h3>
 <select id="commentTarget"></select>
-<input id="commentText" placeholder="Comment Text">
-<input id="commentAuthor" placeholder="Author Name">
-<input id="commentInsta" placeholder="Author Instagram Link">
-<input id="commentDate" placeholder="Date (e.g. 14.05.2025)">
+<input id="commentText" placeholder="Comment Text" />
+<input id="commentAuthor" placeholder="Author Name" />
+<input id="commentInsta" placeholder="Author Instagram Link" />
+<input id="commentDate" placeholder="Date (e.g. 14.05.2025)" />
 <button onclick="addComment()">Add Comment</button>
 
 <h3>Exported JSON</h3>
@@ -136,12 +167,12 @@ function addSocial() {
     document.getElementById("socialName").value = "";
     document.getElementById("socialLink").value = "";
   } else {
-    alert("Please enter both name and link.");
+    alert("Please enter both social name and link.");
   }
 }
 
 function updateSocialsPreview() {
-  socialsPreview.textContent = JSON.stringify(socialsBuffer);
+  socialsPreview.textContent = JSON.stringify(socialsBuffer, null, 2);
 }
 
 function addStudent() {
