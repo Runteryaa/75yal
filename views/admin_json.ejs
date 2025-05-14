@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JSON Editor</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, textarea { width: 100%; margin-bottom: 10px; }
+    .student { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+    .add-btn { margin-top: 10px; display: block; }
+  </style>
+</head>
+<body>
+
+<h2>JSON Editor for Students</h2>
+
+<select id="classSelect"></select>
+
+<div id="studentList"></div>
+
+<h3>Add New Student</h3>
+<input id="number" placeholder="Student Number">
+<input id="name" placeholder="Name">
+<input id="image" placeholder="Image URL">
+<input id="bio" placeholder="Bio">
+<input id="department" placeholder="Department">
+<textarea id="socials" placeholder='Socials (JSON format) e.g. [{"name":"Instagram","link":"..." }]'></textarea>
+<button class="add-btn" onclick="addStudent()">Add Student</button>
+
+<h3>Exported JSON</h3>
+<textarea id="outputJson" rows="10"></textarea>
+
+<script>
+const data = {
+  "years": {
+    "2025": {
+      "image": "/placeholder.svg",
+      "classes": {
+        "12-A": { "image": "/placeholder.svg", "students": [] },
+        "12-B": { "image": "/placeholder.svg", "students": [] },
+        "12-C": { "image": "/placeholder.svg", "students": [] },
+        "12-D": { "image": "/placeholder.svg", "students": [] },
+        "12-E": { "image": "/placeholder.svg", "students": [] },
+        "12-F": {
+          "image": "/placeholder.svg",
+          "students": [
+            {
+              "number": "1101",
+              "name": "Enes Saraçoğlu",
+              "image": "/placeholder.svg",
+              "bio": "bio",
+              "department": "Dil",
+              "socials": [
+                { "name": "Instagram", "link": "https://instagram.com/nnesflix" },
+                { "name": "GitHub", "link": "https://github.com/Runteryaa" }
+              ]
+            },
+            {
+              "number": "628",
+              "name": "Ekrem Alıcı",
+              "image": "/placeholder.svg",
+              "bio": "bio",
+              "department": "Dil",
+              "socials": [
+                { "name": "Instagram", "link": "https://instagram.com/ekremuu" }
+              ],
+              "comments": [
+                {
+                  "text": "Aslan Gardaşım",
+                  "author": "Enes Saraçoğlu",
+                  "insta": "https://instagram.com/nnesflix",
+                  "date": "28.04.2025"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+};
+
+const classSelect = document.getElementById("classSelect");
+const studentList = document.getElementById("studentList");
+const outputJson = document.getElementById("outputJson");
+
+function populateClassSelect() {
+  const classes = data.years["2025"].classes;
+  for (const className in classes) {
+    const option = document.createElement("option");
+    option.value = className;
+    option.text = className;
+    classSelect.appendChild(option);
+  }
+  renderStudents();
+}
+
+function renderStudents() {
+  const className = classSelect.value;
+  const students = data.years["2025"].classes[className].students;
+  studentList.innerHTML = "";
+  students.forEach((student, index) => {
+    const div = document.createElement("div");
+    div.className = "student";
+    div.innerHTML = `
+      <strong>${student.name}</strong> (${student.number})<br>
+      Department: ${student.department}<br>
+      Bio: ${student.bio}<br>
+      <small>Socials: ${JSON.stringify(student.socials)}</small>
+    `;
+    studentList.appendChild(div);
+  });
+  outputJson.value = JSON.stringify(data, null, 2);
+}
+
+function addStudent() {
+  const className = classSelect.value;
+  const students = data.years["2025"].classes[className].students;
+  const student = {
+    number: document.getElementById("number").value,
+    name: document.getElementById("name").value,
+    image: document.getElementById("image").value,
+    bio: document.getElementById("bio").value,
+    department: document.getElementById("department").value,
+    socials: JSON.parse(document.getElementById("socials").value)
+  };
+  students.push(student);
+  renderStudents();
+}
+
+classSelect.addEventListener("change", renderStudents);
+
+populateClassSelect();
+</script>
+
+</body>
+</html>
