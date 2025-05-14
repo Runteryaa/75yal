@@ -45,15 +45,18 @@
         <section class="content">
             <h2>Öğrenciler</h2>
             <div class="cards">
-                    <% students.forEach(student => { %>
-                        <div class="card">
-                            <a href="/mezunlar/<%= year %>/<%= className %>/<%= student.number %>">
-                                <img src="<%= student.image %>" alt="<%= student.name %>">
-                                <h4><%= student.name %></h4>
-                                <p><span class="number"><%= student.number %></span> • <%= (student.comments && student.comments.length) ? student.comments.length : 0 %> Yorum</p>
-                            </a>
-                        </div>
-                    <% }); %>
+                <% students
+                    .slice() // orijinal diziyi bozmamak için kopya al
+                    .sort((a, b) => a.number - b.number) // öğrenci numarasına göre küçükten büyüğe sırala
+                    .forEach(student => { %>
+                    <div class="card">
+                        <a href="/mezunlar/<%= year %>/<%= className %>/<%= student.number %>">
+                            <img src="<%= student.image %>" alt="<%= student.name %>">
+                            <h4><%= student.name %></h4>
+                            <p><span class="number"><%= student.number %></span> • <%= (student.comments && student.comments.length) ? student.comments.length : 0 %> Yorum</p>
+                        </a>
+                    </div>
+                <% }); %>
             </div>
             <% if (!students || students.length === 0) { %>
                 <p>Bu sınıfta öğrenci bulunamadı.</p>

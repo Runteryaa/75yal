@@ -57,7 +57,12 @@
 </form>
 <input id="image" placeholder="Görsel URL" readonly />
 <input id="bio" placeholder="Biyografi" />
-<input id="department" placeholder="Bölüm" /><h4>Sosyal Medya (Ad + Link)</h4>
+<label for="department">Bölüm:</label>
+<select id="department" name="department">
+  <option value="Sayısal">Sayısal</option>
+  <option value="Esit Ağırlık">Esit Ağırlık</option>
+  <option value="Dil">Dil</option>
+</select><h4>Sosyal Medya (Ad + Link)</h4>
 <div class="inline-group">
   <select id="studentSocialSelect" onchange="handleStudentSocialSelect()">
     <option value="">Seçiniz</option>
@@ -95,6 +100,7 @@ async function loadJSON() {
   yearSelect.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join('');
   yearSelect.onchange = populateClasses;
   populateClasses();
+  populateStudents();
 }
 
 function populateClasses() {
@@ -102,6 +108,7 @@ function populateClasses() {
   const classSelect = document.getElementById('classSelect');
   const classes = Object.keys(jsonData.years[year].classes);
   classSelect.innerHTML = classes.map(c => `<option value="${c}">${c}</option>`).join('');
+  classSelect.onchange = populateStudents;
   populateStudents();
 }
 
@@ -111,7 +118,7 @@ function populateStudents() {
   const students = jsonData.years[year].classes[className].students || [];
   const studentList = document.getElementById('studentList');
   const commentTarget = document.getElementById('commentTarget');
-  studentList.innerHTML = students.map(s => `<div class="student"><strong>${s.name}</strong> (${s.number})</div>`).join('');
+  studentList.innerHTML = students.map(s => `<div class="student"><strong>${s.name}(${s.number})</strong><br>Bio: ${s.bio}<br><small>Socials: ${JSON.stringify(s.socials)}</small></div>`).join('');
   commentTarget.innerHTML = students.map((s, i) => `<option value="${i}">${s.name}</option>`).join('');
   updateOutput();
 }
@@ -223,7 +230,6 @@ function copyToClipboard() {
   alert('JSON kopyalandı!');
 }
 
-// Set current date automatically for commentDate input
 document.addEventListener('DOMContentLoaded', function() {
   const dateInput = document.getElementById('commentDate');
   if (dateInput) {
