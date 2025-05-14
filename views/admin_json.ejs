@@ -2,18 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>JSON Editor</title>
+  <title>Yıllık JSON Editor</title>
   <style>
-    body { font-family: Arial; padding: 20px; }
-    input, textarea { width: 100%; margin-bottom: 10px; }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, textarea, select { width: 100%; margin-bottom: 10px; padding: 8px; }
     .student { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
-    .add-btn { margin-top: 10px; display: block; }
+    .add-btn { margin-top: 10px; padding: 10px; }
+    #outputJson { width: 100%; height: 200px; }
   </style>
 </head>
 <body>
 
-<h2>JSON Editor for Students</h2>
+<h2>Yıllık JSON Editor</h2>
 
+<label for="classSelect">Select Class:</label>
 <select id="classSelect"></select>
 
 <div id="studentList"></div>
@@ -24,68 +26,32 @@
 <input id="image" placeholder="Image URL">
 <input id="bio" placeholder="Bio">
 <input id="department" placeholder="Department">
-<textarea id="socials" placeholder='Socials (JSON format) e.g. [{"name":"Instagram","link":"..." }]'></textarea>
+<textarea id="socials" placeholder='Socials (JSON format) e.g. [{"name":"Instagram","link":"..."}]'></textarea>
 <button class="add-btn" onclick="addStudent()">Add Student</button>
 
 <h3>Exported JSON</h3>
-<textarea id="outputJson" rows="10"></textarea>
+<textarea id="outputJson" readonly></textarea>
+<button onclick="copyToClipboard()">Copy JSON</button>
 
 <script>
-const data = {
-  "years": {
-    "2025": {
-      "image": "/placeholder.svg",
-      "classes": {
-        "12-A": { "image": "/placeholder.svg", "students": [] },
-        "12-B": { "image": "/placeholder.svg", "students": [] },
-        "12-C": { "image": "/placeholder.svg", "students": [] },
-        "12-D": { "image": "/placeholder.svg", "students": [] },
-        "12-E": { "image": "/placeholder.svg", "students": [] },
-        "12-F": {
-          "image": "/placeholder.svg",
-          "students": [
-            {
-              "number": "1101",
-              "name": "Enes Saraçoğlu",
-              "image": "/placeholder.svg",
-              "bio": "bio",
-              "department": "Dil",
-              "socials": [
-                { "name": "Instagram", "link": "https://instagram.com/nnesflix" },
-                { "name": "GitHub", "link": "https://github.com/Runteryaa" }
-              ]
-            },
-            {
-              "number": "628",
-              "name": "Ekrem Alıcı",
-              "image": "/placeholder.svg",
-              "bio": "bio",
-              "department": "Dil",
-              "socials": [
-                { "name": "Instagram", "link": "https://instagram.com/ekremuu" }
-              ],
-              "comments": [
-                {
-                  "text": "Aslan Gardaşım",
-                  "author": "Enes Saraçoğlu",
-                  "insta": "https://instagram.com/nnesflix",
-                  "date": "28.04.2025"
-                }
-              ]
-            }
-          ]
-        }
-      }
-    }
-  }
-};
-
+let data = {};
 const classSelect = document.getElementById("classSelect");
 const studentList = document.getElementById("studentList");
 const outputJson = document.getElementById("outputJson");
 
+async function fetchData() {
+  try {
+    const response = await fetch("https://yillik75.com.tr/data.json");
+    data = await response.json();
+    populateClassSelect();
+  } catch (error) {
+    alert("Failed to fetch JSON data: " + error);
+  }
+}
+
 function populateClassSelect() {
   const classes = data.years["2025"].classes;
+  classSelect.innerHTML = "";
   for (const className in classes) {
     const option = document.createElement("option");
     option.value = className;
@@ -116,21 +82,41 @@ function renderStudents() {
 function addStudent() {
   const className = classSelect.value;
   const students = data.years["2025"].classes[className].students;
-  const student = {
-    number: document.getElementById("number").value,
-    name: document.getElementById("name").value,
-    image: document.getElementById("image").value,
-    bio: document.getElementById("bio").value,
-    department: document.getElementById("department").value,
-    socials: JSON.parse(document.getElementById("socials").value)
-  };
-  students.push(student);
-  renderStudents();
+  try {
+    const student = {
+      number: document.getElementById("number").value,
+      name: document.getElementById("name").value,
+      image: document.getElementById("image").value,
+      bio: document.getElementById("bio").value,
+      department: document.getElementById("department").value,
+      socials: JSON.parse(document.getElementById("socials").value)
+    };
+    students.push(student);
+    renderStudents();
+    clearForm();
+  } catch (error) {
+    alert("Invalid JSON in socials field: " + error);
+  }
+}
+
+function clearForm() {
+  document.getElementById("number").value = "";
+  document.getElementById("name").value = "";
+  document.getElementById("image").value = "";
+  document.getElementById("bio").value = "";
+  document.getElementById("department").value = "";
+  document.getElementById("socials").value = "";
+}
+
+function copyToClipboard() {
+  outputJson.select();
+  document.execCommand("copy");
+  alert("JSON copied to clipboard!");
 }
 
 classSelect.addEventListener("change", renderStudents);
 
-populateClassSelect();
+fetchData();
 </script>
 
 </body>
