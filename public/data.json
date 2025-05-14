@@ -90,48 +90,6 @@
                   "date": "14.06.2025"
                 }
               ]
-            },
-            {
-              "number": "714",
-              "name": "Alara Varol",
-              "image": "https://i.postimg.cc/8CtDXNq5/IMG-4727.jpg",
-              "bio": "gunaydin kanka",
-              "department": "Dil",
-              "socials": [
-                {
-                  "name": "instagram",
-                  "link": "https://instagram.com/alarwzn"
-                }
-              ],
-              "comments": [
-                {
-                  "text": "GUNAYDIN",
-                  "author": "Ekrem Alici",
-                  "insta": "https://instagram.com/ekremuu",
-                  "date": "14.05.2025"
-                }
-              ]
-            },
-            {
-              "number": "949",
-              "name": "Soykan Çam",
-              "image": "https://res.cloudinary.com/db4ayioxs/image/upload/v1747217395/uploads/1747217394376-IMG_4735.jpeg.png",
-              "bio": "sporcu adam olacam",
-              "department": "Dil",
-              "socials": [
-                {
-                  "name": "instagram",
-                  "link": "https://instagram.com/soykan_7"
-                }
-              ],
-              "comments": [
-                {
-                  "text": "kit, ali koç başkanım çok yaşa",
-                  "author": "Ekrem Alici",
-                  "insta": "https://instagram.com/ekremuu",
-                  "date": "14.05.2025"
-                }
-              ]
             }
           ]
         }
