@@ -63,6 +63,27 @@
                   "date": "28.04.2025"
                 }
               ]
+            },
+            {
+              "number": "1041",
+              "name": "Ecrin Dere",
+              "image": "",
+              "bio": "gunaydin",
+              "department": "Dil",
+              "socials": [
+                {
+                  "name": "instagram",
+                  "link": "https://instagram.com/ecrinndre"
+                }
+              ],
+              "comments": [
+                {
+                  "text": "gunaydin kanka",
+                  "author": "Ekrem Alıcı",
+                  "insta": "https://instagram.com/ekremuu",
+                  "date": "14.06.2025"
+                }
+              ]
             }
           ]
         }
