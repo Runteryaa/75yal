@@ -174,7 +174,10 @@ app.get('/admin/json', requireAdmin, (req, res) => {
 app.post('/upload-image', upload.single('image'), async (req, res) => {
     try {
         const apiKey = process.env.IMGBB_API;
-        if (!apiKey) return res.status(500).json({ error: 'IMGBB API key missing' });
+        if (!apiKey) {
+            console.error('IMGBB API key is missing from environment variables.');
+            return res.status(500).json({ error: 'IMGBB API key missing' });
+        }
 
         const imageBase64 = req.file.buffer.toString('base64');
         const response = await axios.post('https://api.imgbb.com/1/upload', null, {
@@ -187,9 +190,11 @@ app.post('/upload-image', upload.single('image'), async (req, res) => {
         if (response.data && response.data.data && response.data.data.url) {
             return res.json({ url: response.data.data.url });
         } else {
+            console.error('Upload failed: unexpected response structure', response.data);
             return res.status(500).json({ error: 'Upload failed' });
         }
     } catch (err) {
+        console.error('Upload error:', err);
         return res.status(500).json({ error: 'Upload error', details: err.message });
     }
 });
