@@ -214,6 +214,7 @@ a.abtn[target="_blank"] {
    gap: 2rem;
    justify-content: center;
    flex-wrap: wrap;
+   flex-direction: row;
 
    @include mobile {
       flex-direction: column;

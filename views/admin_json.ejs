@@ -45,7 +45,6 @@
     img {
       height: 50px;
       width: 50px;
-      position: absolute;
     }
   </style>
 </head>
@@ -123,7 +122,7 @@ function populateStudents() {
   const students = jsonData.years[year].classes[className].students || [];
   const studentList = document.getElementById('studentList');
   const commentTarget = document.getElementById('commentTarget');
-  studentList.innerHTML = students.map(s => `<div class="student"><strong>${s.name}(${s.number}) ${s.department}</strong><br>Bio: ${s.bio}<br><small>Socials: ${JSON.stringify(s.socials)}<br>Comments: ${JSON.stringify(s.comments)}</small><img src="${s.image}"></div>`).join('');
+  studentList.innerHTML = students.map(s => `<div class="student"><strong>${s.name}(${s.number}) ${s.department}</strong><br>Bio: ${s.bio}<br><small>Socials: ${JSON.stringify(s.socials)}<br>Comments: ${JSON.stringify(s.comments)}</small><br><img src="${s.image}"></div>`).join('');
   commentTarget.innerHTML = students.map((s, i) => `<option value="${i}">${s.name}</option>`).join('');
   updateOutput();
 }
