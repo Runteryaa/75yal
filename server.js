@@ -170,27 +170,30 @@ app.get('/data.json', cors(), (req, res) => {
 app.get('/admin/json', requireAdmin, (req, res) => {
     res.render('admin_json', { title: 'JSON | Admin Paneli' });
 });
+const FormData = require('form-data');
 
 app.post('/upload-image', upload.single('image'), async (req, res) => {
     try {
         const apiKey = process.env.IMGBB_API;
         if (!apiKey) {
-            console.error('IMGBB API key is missing from environment variables.');
+            console.error('IMGBB API key is missing.');
             return res.status(500).json({ error: 'IMGBB API key missing' });
         }
 
         const imageBase64 = req.file.buffer.toString('base64');
-        const response = await axios.post('https://api.imgbb.com/1/upload', null, {
-            params: {
-                key: apiKey,
-                image: imageBase64
-            }
+
+        const form = new FormData();
+        form.append('key', apiKey);
+        form.append('image', imageBase64);
+
+        const response = await axios.post('https://api.imgbb.com/1/upload', form, {
+            headers: form.getHeaders()
         });
 
-        if (response.data && response.data.data && response.data.data.url) {
+        if (response.data?.data?.url) {
             return res.json({ url: response.data.data.url });
         } else {
-            console.error('Upload failed: unexpected response structure', response.data);
+            console.error('Upload failed: unexpected response', response.data);
             return res.status(500).json({ error: 'Upload failed' });
         }
     } catch (err) {
