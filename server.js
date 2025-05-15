@@ -175,29 +175,38 @@ const FormData = require('form-data');
 app.post('/upload-image', upload.single('image'), async (req, res) => {
     try {
         const apiKey = process.env.IMGBB_API;
+
         if (!apiKey) {
             console.error('IMGBB API key is missing.');
             return res.status(500).json({ error: 'IMGBB API key missing' });
         }
 
+        if (!req.file) {
+            console.error('No file received in the request.');
+            return res.status(400).json({ error: 'No image file uploaded' });
+        }
+
         const imageBase64 = req.file.buffer.toString('base64');
+        console.info(`Uploading image of size: ${req.file.size} bytes`);
 
         const form = new FormData();
         form.append('key', apiKey);
         form.append('image', imageBase64);
 
         const response = await axios.post('https://api.imgbb.com/1/upload', form, {
-            headers: form.getHeaders()
+            headers: form.getHeaders(),
+            timeout: 20000 // 20 seconds
         });
 
         if (response.data?.data?.url) {
+            console.info('Upload successful:', response.data.data.url);
             return res.json({ url: response.data.data.url });
         } else {
             console.error('Upload failed: unexpected response', response.data);
             return res.status(500).json({ error: 'Upload failed' });
         }
     } catch (err) {
-        console.error('Upload error:', err);
+        console.error('Upload error:', err.message);
         return res.status(500).json({ error: 'Upload error', details: err.message });
     }
 });
