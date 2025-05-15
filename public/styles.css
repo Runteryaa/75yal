@@ -188,6 +188,11 @@ a.abtn[target=_blank] {
   justify-content: center;
   flex-wrap: wrap;
 }
+@media screen and (max-width: 850px) {
+  .cards {
+    flex-direction: column;
+  }
+}
 .cards .card {
   background: #f9f9ff;
   border-radius: 8px;
@@ -203,10 +208,15 @@ a.abtn[target=_blank] {
   text-decoration: none;
 }
 .cards .card img {
-  width: 100%;
+  width: 300px;
   height: 300px;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
+}
+@media screen and (max-width: 850px) {
+  .cards .card img {
+    width: 100%;
+  }
 }
 .cards .card h4 {
   margin: 1rem;

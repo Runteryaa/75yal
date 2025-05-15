@@ -215,6 +215,10 @@ a.abtn[target="_blank"] {
    justify-content: center;
    flex-wrap: wrap;
 
+   @include mobile {
+      flex-direction: column;
+   }
+
    .card {
       background: $bgcolor;
       border-radius: 8px;
@@ -230,10 +234,13 @@ a.abtn[target="_blank"] {
          text-decoration: none;
       }
       img {
-         width: 100%;
+         width: 300px;
          height: 300px;
-         -o-object-fit: cover;
-            object-fit: cover;
+         object-fit: cover;
+
+         @include mobile {
+            width: 100%;
+         }
       }
       h4 {
          margin: 1rem;
