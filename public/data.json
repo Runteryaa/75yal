@@ -90,6 +90,32 @@
                   "date": "14.06.2025"
                 }
               ]
+            },
+            {
+              "number": "522",
+              "name": "Deniz Coşkun",
+              "image": "https://i.ibb.co/h1sHkb9B/6831fa0d5824.jpg",
+              "bio": "...",
+              "department": "Dil",
+              "socials": [
+                {
+                  "name": "Instagram",
+                  "link": "https://instagram.com/doniscoskun"
+                }
+              ]
+            },
+            {
+              "number": "321",
+              "name": "Asya Karcı",
+              "image": "https://i.ibb.co/Kcd1TL0P/66003cebd3d7.jpg",
+              "bio": "",
+              "department": "Dil",
+              "socials": [
+                {
+                  "name": "Instagram",
+                  "link": "https://instagram.com/_krc_asy_"
+                }
+              ]
             }
           ]
         }
