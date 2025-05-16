@@ -116,6 +116,45 @@
                   "link": "https://instagram.com/_krc_asy_"
                 }
               ]
+            },
+            {
+              "number": "714",
+              "name": "Alara Varol",
+              "image": "https://i.ibb.co/0vnHBQ0/d68d36776c95.jpg",
+              "bio": "gunaydin kanka",
+              "department": "Dil",
+              "socials": [
+                {
+                  "name": "Instagram",
+                  "link": "https://instagram.com/alarwzn"
+                }
+              ]
+            },
+            {
+              "number": "949",
+              "name": "Soykan Çam",
+              "image": "https://i.ibb.co/8gNxGM8y/66ee192219c2.png",
+              "bio": "sporcu adam olacam 😎",
+              "department": "Dil",
+              "socials": [
+                {
+                  "name": "Instagram",
+                  "link": "https://instagram.com/soykan_7"
+                }
+              ]
+            },
+            {
+              "number": "190",
+              "name": "Elif Tuğsen Yücel",
+              "image": "https://i.ibb.co/FdNvGJh/a76a86d7dfc9.jpg",
+              "bio": "...",
+              "department": "Dil",
+              "socials": [
+                {
+                  "name": "Instagram",
+                  "link": "https://instagram.com/tugsen"
+                }
+              ]
             }
           ]
         }
