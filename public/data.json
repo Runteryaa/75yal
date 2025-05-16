@@ -5,9 +5,7 @@
       "classes": {
         "12-A": {
           "image": "/placeholder.svg",
-          "students": [
-            
-          ]
+          "students": []
         },
         "12-B": {
           "image": "/placeholder.svg",
@@ -72,7 +70,7 @@
                 }
               ]
             },
-    {
+            {
               "number": "0",
               "name": "Elif Tuğsen Yücel",
               "image": "https://i.ibb.co/FdNvGJh/a76a86d7dfc9.jpg",
@@ -110,7 +108,8 @@
                   "link": "https://instagram.com/alarwzn"
                 }
               ]
-            }{
+            },
+            {
               "number": "0",
               "name": "Elif Tuğsen Yücel",
               "image": "https://i.ibb.co/FdNvGJh/a76a86d7dfc9.jpg",
