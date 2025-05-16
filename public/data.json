@@ -5,7 +5,47 @@
       "classes": {
         "12-A": {
           "image": "/placeholder.svg",
-          "students": []
+          "students": [
+            {
+              "number": "0",
+              "name": "Elif Tuğsen Yücel",
+              "image": "https://i.ibb.co/FdNvGJh/a76a86d7dfc9.jpg",
+              "bio": "...",
+              "department": "Dil",
+              "socials": [
+                {
+                  "name": "Instagram",
+                  "link": "https://instagram.com/tugsen"
+                }
+              ]
+            },
+            {
+              "number": "949",
+              "name": "Soykan Çam",
+              "image": "https://i.ibb.co/8gNxGM8y/66ee192219c2.png",
+              "bio": "sporcu adam olacam 😎",
+              "department": "Dil",
+              "socials": [
+                {
+                  "name": "Instagram",
+                  "link": "https://instagram.com/soykan_7"
+                }
+              ]
+            },
+            {
+              "number": "714",
+              "name": "Alara Varol",
+              "image": "https://i.ibb.co/0vnHBQ0/d68d36776c95.jpg",
+              "bio": "gunaydin kanka",
+              "department": "Dil",
+              "socials": [
+                {
+                  "name": "Instagram",
+                  "link": "https://instagram.com/alarwzn"
+                }
+              ]
+            }
+          ]
         },
         "12-B": {
           "image": "/placeholder.svg",
@@ -88,32 +128,6 @@
                   "author": "Ekrem Alıcı",
                   "insta": "https://instagram.com/ekremuu",
                   "date": "14.06.2025"
-                }
-              ]
-            },
-            {
-              "number": "522",
-              "name": "Deniz Coşkun",
-              "image": "https://i.ibb.co/h1sHkb9B/6831fa0d5824.jpg",
-              "bio": "...",
-              "department": "Dil",
-              "socials": [
-                {
-                  "name": "Instagram",
-                  "link": "https://instagram.com/doniscoskun"
-                }
-              ]
-            },
-            {
-              "number": "321",
-              "name": "Asya Karcı",
-              "image": "https://i.ibb.co/Kcd1TL0P/66003cebd3d7.jpg",
-              "bio": "",
-              "department": "Dil",
-              "socials": [
-                {
-                  "name": "Instagram",
-                  "link": "https://instagram.com/_krc_asy_"
                 }
               ]
             }
