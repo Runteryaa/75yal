@@ -106,29 +106,6 @@
         <p>Lütfen daha fazla bilgi için <a href="/hakkinda">/Hakkında</a> sayfasını göz atın edin.</p>
         <button onclick="closeFirstVisit()">Kapat</button>
     </dialog>
-
-<div class="video-frame">
-<iframe id="watchtime-frame" src="https://www.youtube.com/embed/4i5TTAPMoZI?autoplay=1&rel=0&hl=tr-tr" width="" height="" frameborder="0" allowfullscreen></iframe>
-</div>
-
-<script>
-  // Force autoplay on first interaction
-  function forceAutoplay() {
-    const iframe = document.getElementById("watchtime-frame");
-    const src = iframe.src;
-    iframe.src = ""; // reset src
-    setTimeout(() => iframe.src = src + "&autoplay=1", 100);
-  }
-
-window.addEventListener("DOMContentLoaded", () => {
-  forceAutoplay();
-});
-
-  window.addEventListener("click", function once() {
-    forceAutoplay();
-    window.removeEventListener("click", once);
-  });
-</script>
     <script src="/script.js"></script>
 </body>
 </html>
