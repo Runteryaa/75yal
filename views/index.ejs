@@ -108,14 +108,7 @@
     </dialog>
 
 <div class="video-frame">
-    <iframe
-        id="watchtime-frame"
-        src="https://www.youtube.com/embed/4i5TTAPMoZI?autoplay=1&mute=0&loop=1&playlist=4i5TTAPMoZI&controls=0&modestbranding=1"
-        title="Watch Time Video"
-        frameborder="0"
-        allow="autoplay; encrypted-media"
-        allowfullscreen>
-    </iframe>
+<iframe id="watchtime-frame" src="https://www.youtube.com/embed/4i5TTAPMoZI?autoplay=1&rel=0&hl=tr-tr" width="" height="" frameborder="0" allowfullscreen></iframe>
 </div>
 
 <script>
@@ -127,7 +120,10 @@
     setTimeout(() => iframe.src = src + "&autoplay=1", 100);
   }
 
-  // Trigger autoplay on any click
+window.addEventListener("DOMContentLoaded", () => {
+  forceAutoplay();
+});
+
   window.addEventListener("click", function once() {
     forceAutoplay();
     window.removeEventListener("click", once);
