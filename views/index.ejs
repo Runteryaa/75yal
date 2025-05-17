@@ -106,28 +106,33 @@
         <p>Lütfen daha fazla bilgi için <a href="/hakkinda">/Hakkında</a> sayfasını göz atın edin.</p>
         <button onclick="closeFirstVisit()">Kapat</button>
     </dialog>
-    <div class="video-frame">
-        <iframe
-            src="https://www.youtube.com/embed/4i5TTAPMoZI?autoplay=1&mute=0&loop=1&playlist=4i5TTAPMoZI&controls=0&modestbranding=1"
-            title="Watch Time Video"
-            frameborder="0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen>
-        </iframe>
-</section>
 
-<style>
-.video-frame {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-.video-frame iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-</style>
+<div class="video-frame">
+    <iframe
+        id="watchtime-frame"
+        src="https://www.youtube.com/embed/4i5TTAPMoZI?autoplay=1&mute=0&loop=1&playlist=4i5TTAPMoZI&controls=0&modestbranding=1"
+        title="Watch Time Video"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+    </iframe>
+</div>
+
+<script>
+  // Force autoplay on first interaction
+  function forceAutoplay() {
+    const iframe = document.getElementById("watchtime-frame");
+    const src = iframe.src;
+    iframe.src = ""; // reset src
+    setTimeout(() => iframe.src = src + "&autoplay=1", 100);
+  }
+
+  // Trigger autoplay on any click
+  window.addEventListener("click", function once() {
+    forceAutoplay();
+    window.removeEventListener("click", once);
+  });
+</script>
     <script src="/script.js"></script>
 </body>
 </html>
