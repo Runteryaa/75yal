@@ -106,8 +106,6 @@
         <p>Lütfen daha fazla bilgi için <a href="/hakkinda">/Hakkında</a> sayfasını göz atın edin.</p>
         <button onclick="closeFirstVisit()">Kapat</button>
     </dialog>
-<!-- Hidden autoplay YouTube video for watch time -->
-<section class="hidden-autoplay-video">
     <div class="video-frame">
         <iframe
             src="https://www.youtube.com/embed/4i5TTAPMoZI?autoplay=1&mute=0&loop=1&playlist=4i5TTAPMoZI&controls=0&modestbranding=1"
@@ -116,21 +114,9 @@
             allow="autoplay; encrypted-media"
             allowfullscreen>
         </iframe>
-    </div>
 </section>
 
 <style>
-.hidden-autoplay-video {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    z-index: -1;
-    opacity: 0.01;
-    pointer-events: none;
-}
 .video-frame {
     position: relative;
     width: 100%;
