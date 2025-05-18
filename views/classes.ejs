@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel="stylesheet" href="/styles.css">
-    
-    <link rel="preload" href="/subset-Montserrat-Medium.woff" as="font" type="font/woff2" crossorigin>
-
 </head>
 <body>
     <header>
         <div class="navbar">
-            <a href="/"><h1>75YALYıllık</h1></a>
+            <a href="/"><h1>Yıllık75</h1></a>
             <form action="/search" method="get" class="mezun-search">
                 <input type="text" name="q" placeholder="Ad, Numara veya Instagram" required>
                 <button type="submit">Ara</button>
@@ -45,7 +42,7 @@
         <section class="content">
             <h2>Öğrenciler</h2>
             <div class="cards">
-                <% students
+                <% (students || [])
                     .slice() // orijinal diziyi bozmamak için kopya al
                     .sort((a, b) => a.number - b.number) // öğrenci numarasına göre küçükten büyüğe sırala
                     .forEach(student => { %>

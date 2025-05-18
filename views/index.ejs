@@ -10,12 +10,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 
-     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9944004180654653" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9944004180654653" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
         <div class="navbar">
-            <a href="/"><h1>75YALYıllık</h1></a>
+            <a href="/"><h1>Yıllık75</h1></a>
             <form action="/search" method="get" class="mezun-search">
                 <input type="text" name="q" placeholder="Ad, Numara veya Instagram" required>
                 <button type="submit">Ara</button>
@@ -35,15 +35,15 @@
     </div>
     <main>
         <section class="intro">
-            <h1>75YAL Yıllık</h1>
+            <h1>Yıllık 75</h1>
             <p>75YAL Mezunlarının anılarını, fotoğraflarını ve arkadaşlarının yorumlarını keşfedin.</p>
         </section>
         <section class="content">
             <h2>Mezuniyet Yılları</h2>
             <div class="cards">
                 <% years
-                    .slice() // orijinal diziyi bozmamak için kopya al
-                    .sort((a, b) => b.year - a.year) // büyükten küçüğe sırala
+                    .slice()
+                    .sort((a, b) => b.year - a.year)
                     .forEach(year => { %>
                     <div class="card">
                         <a href="/mezunlar/<%= year.year %>">
@@ -72,7 +72,7 @@
 
         <div>
             <div class="contentbox">
-                <h1>75YAL Mezunları Hakkında</h1>
+                <h1>75YAL Yıllık Hakkında</h1>
                 <h3>Bu projeye okul yönetimimiz tarafından izin verilmiştir!</h3>
                 <p>Bu dijital mezuniyet yıllığı, 75YAL mezunlarının anılarını ve birbirleri hakkındaki düşüncelerini ücretsiz bir şekilde gelecek nesillere aktarmak amacıyla oluşturulmuştur.</p>
                 <p>Yıllığımızda mezuniyet yıllarına göre sınıflandırılmış sınıfları ve öğrencileri bulabilirsiniz. Her öğrenci sayfasında, arkadaşlarının o kişi hakkında yazdığı düşünceler ve anılar yer almaktadır.</p>

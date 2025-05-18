@@ -13,7 +13,7 @@
 <body>
     <header>
         <div class="navbar">
-            <a href="/"><h1>75YALYıllık</h1></a>
+            <a href="/"><h1>Yıllık75</h1></a>
             <form action="/search" method="get" class="mezun-search">
                 <input type="text" name="q" placeholder="Ad, Numara veya Instagram" required>
                 <button type="submit">Ara</button>
@@ -45,7 +45,7 @@
                     <img src="<%= student.image %>" alt="<%= student.name %>">
                 </div>
                 <div class="socials">
-                    <% student.socials.forEach(socials => { %>
+                    <% (student.socials || []).forEach(socials => { %>
                             <a class="abtn" href="<%= socials.link %>" target="_blank"><%= socials.name %></a>
                     <% }); %>
                 </div>

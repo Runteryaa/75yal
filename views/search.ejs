@@ -13,7 +13,7 @@
 <body>
     <header>
         <div class="navbar">
-            <a href="/"><h1>75YALYıllık</h1></a>
+            <a href="/"><h1>Yıllık75</h1></a>
             <form action="/search" method="get" class="mezun-search">
                 <input type="text" name="q" placeholder="Ad, Numara veya Instagram" required>
                 <button type="submit">Ara</button>
@@ -44,7 +44,7 @@
                 </p>
             <% } %>
             <div class="cards">
-                <% results.forEach(result => { %>
+                <% (results || []).forEach(result => { %>
                     <div class="card">
                         <a href="/mezunlar/<%= result.year %>/<%= result.className %>/<%= result.student.number %>">
                             <img src="<%= result.student.photo || '/placeholder.svg' %>" alt="<%= result.student.name %>">

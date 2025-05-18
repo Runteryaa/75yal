@@ -33,7 +33,6 @@
     }
     .inline-group {
       display: flex;
-      flex-wrap: wrap;
       gap: 10px;
     }
     .inline-group input, .inline-group select {
@@ -46,20 +45,56 @@
       height: 50px;
       width: 50px;
     }
+    #outputJson.fullscreen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      background: #222;
+      color: #fff;
+      font-size: 1.1em;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    #exitFullscreenBtn {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      z-index: 10000;
+      background: #e74c3c;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      width: auto;
+    }
   </style>
 </head>
 <body><a href="/admin"><h2>Yıllık JSON Editor</h2></a><label for="yearSelect">Yıl Seçin:</label> <select id="yearSelect"></select>
+<div class="inline-group">
+  <button onclick="addYear()">Yeni Yıl Ekle</button>
+  <button onclick="removeYear()">Yılı Sil</button>
+</div>
 
 <label for="classSelect">Sınıf Seçin:</label> <select id="classSelect"></select>
+<div class="inline-group">
+  <button onclick="addClass()">Yeni Sınıf Ekle</button>
+  <button onclick="removeClass()">Sınıfı Sil</button>
+</div>
 
-<div id="studentList"></div><h3>Yeni Öğrenci Ekle</h3>
+<div id="studentList"></div>
+<input type="hidden" id="editIndex" value="-1" />
+<h3>Yeni Öğrenci Ekle</h3>
 <input id="number" placeholder="Öğrenci Numarası" />
 <input id="name" placeholder="Ad Soyad" />
 <form id="imageUploadForm" enctype="multipart/form-data" style="margin-bottom:10px;">
   <input type="file" id="imageUpload" name="image" accept="image/*" />
   <button type="submit">Fotoğrafı Yükle</button>
 </form>
-<input id="image" placeholder="Görsel URL" readonly />
+<input id="image" placeholder="Görsel URL" />
 <input id="bio" placeholder="Biyografi" />
 <label for="department">Bölüm:</label>
 <select id="department" name="department">
@@ -82,7 +117,10 @@
   <input id="studentSocialValue" placeholder="Kullanıcı Adı veya Link" />
 </div>
 <button onclick="addSocial()">Sosyal Medya Ekle</button>
-<div id="socialsPreview" class="socials-preview"></div><button onclick="addStudent()">Öğrenci Ekle</button>
+<div id="socialsPreview" class="socials-preview"></div>
+<button id="addStudentBtn" onclick="addStudent()">Öğrenci Ekle</button>
+<button id="updateStudentBtn" onclick="updateStudent()" style="display:none;">Güncelle</button>
+<button id="cancelEditBtn" onclick="cancelEdit()" style="display:none;">Vazgeç</button>
 
 <h3>Öğrenciye Yorum Ekle</h3>
 <select id="commentTarget"></select>
@@ -90,21 +128,36 @@
 <input id="commentAuthor" placeholder="Yorum Yapan" />
 <input id="commentInsta" placeholder="Instagram Kullanıcı Adı veya Link" />
 <input id="commentDate" type="date" />
-<button onclick="addComment()">Yorum Ekle</button><h3>Oluşturulan JSON</h3>
-<textarea id="outputJson" readonly></textarea>
-<button onclick="copyToClipboard()">JSON'u Kopyala</button><script>
+<input type="hidden" id="editCommentIndex" value="-1" />
+<button id="addCommentBtn" onclick="addComment()">Yorum Ekle</button>
+<button id="updateCommentBtn" onclick="updateComment()" style="display:none;">Yorumu Güncelle</button>
+<h3>Oluşturulan JSON</h3>
+<textarea id="outputJson"></textarea>
+<button onclick="saveToDB()">Veritabanına Kaydet</button>
+<button id="fullscreenJsonBtn" onclick="toggleJsonFullscreen()">Tam Ekran</button>
+<button id="exitFullscreenBtn" onclick="exitJsonFullscreen()" style="display:none;">Çıkış</button>
+
+<script>
+
 let jsonData = {};
 let socials = [];
 
 async function loadJSON() {
-  const res = await fetch('https://yillik75.com.tr/data.json');
+  const res = await fetch('/admin/firebase-data');
   jsonData = await res.json();
+  populateYearSelect();
+  populateClasses();
+  populateStudents();
+}
+
+function populateYearSelect() {
   const years = Object.keys(jsonData.years);
   const yearSelect = document.getElementById('yearSelect');
   yearSelect.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join('');
-  yearSelect.onchange = populateClasses;
-  populateClasses();
-  populateStudents();
+  yearSelect.onchange = () => {
+    populateClasses();
+    populateStudents();
+  };
 }
 
 function populateClasses() {
@@ -122,7 +175,33 @@ function populateStudents() {
   const students = jsonData.years[year].classes[className].students || [];
   const studentList = document.getElementById('studentList');
   const commentTarget = document.getElementById('commentTarget');
-  studentList.innerHTML = students.map(s => `<div class="student"><strong>${s.name}(${s.number}) ${s.department}</strong><br>Bio: ${s.bio}<br><small>Socials: ${JSON.stringify(s.socials)}<br>Comments: ${JSON.stringify(s.comments)}</small><br><img src="${s.image}"></div>`).join('');
+  studentList.innerHTML = students.map((s, i) => `
+    <div class="student">
+      <strong>${s.name}(${s.number}) ${s.department}</strong><br>
+      Bio: ${s.bio}<br>
+      <small>
+        Socials: ${JSON.stringify(s.socials)}<br>
+        Comments:<br>
+        ${(s.comments || []).map((c, ci) => `
+          <div style="margin-left:10px;">
+            <b>${c.author || ''}</b>: ${c.text || ''} 
+            <small>${c.date || ''}</small>
+            <a href="${c.insta || '#'}" target="_blank">${c.insta ? 'Instagram' : ''}</a>
+            <div class="inline-group">
+              <button type="button" onclick="editComment(${i},${ci})">Düzenle</button>
+              <button type="button" onclick="removeComment(${i},${ci})">Sil</button>
+            </div>
+          </div>
+        `).join('')}
+      </small><br>
+      <img src="${s.image}">
+      <br>
+      <div class="inline-group">
+        <button onclick="editStudent(${i})">Düzenle</button>
+        <button onclick="removeStudent(${i})">Sil</button>
+      </div>
+    </div>
+  `).join('');
   commentTarget.innerHTML = students.map((s, i) => `<option value="${i}">${s.name}</option>`).join('');
   updateOutput();
 }
@@ -151,7 +230,13 @@ function addSocial() {
   }
 
   socials.push({ name, link });
-  document.getElementById('socialsPreview').innerText = JSON.stringify(socials, null, 2);
+  document.getElementById('socialsPreview').innerHTML = socials.map((s, i) =>
+    `<div>
+      <b>${s.name}</b>: <a href="${s.link}" target="_blank">${s.link}</a>
+      <button type="button" onclick="editSocial(${i})">Düzenle</button>
+      <button type="button" onclick="removeSocial(${i})">Sil</button>
+    </div>`
+  ).join('');
 
   document.getElementById('studentSocialSelect').value = '';
   document.getElementById('studentSocialCustom').value = '';
@@ -159,7 +244,7 @@ function addSocial() {
   handleStudentSocialSelect();
 }
 
-function addStudent() {
+async function addStudent() {
   const year = document.getElementById('yearSelect').value;
   const className = document.getElementById('classSelect').value;
   const student = {
@@ -170,11 +255,15 @@ function addStudent() {
     department: document.getElementById('department').value,
     socials: socials
   };
-  jsonData.years[year].classes[className].students.push(student);
+  await fetch('/admin/add-student', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ year, className, student })
+  });
   socials = [];
   document.getElementById('socialsPreview').innerText = '';
   document.querySelectorAll('#number, #name, #image, #bio, #department').forEach(i => i.value = '');
-  populateStudents();
+  await loadJSON();
 }
 
 function handleSocialSelect() {
@@ -279,7 +368,260 @@ document.getElementById('imageUploadForm').addEventListener('submit', async func
     btn.textContent = 'Fotoğrafı Yükle';
 });
 
+function editStudent(index) {
+  const year = document.getElementById('yearSelect').value;
+  const className = document.getElementById('classSelect').value;
+  const student = jsonData.years[year].classes[className].students[index];
+  document.getElementById('number').value = student.number;
+  document.getElementById('name').value = student.name;
+  document.getElementById('image').value = student.image;
+  document.getElementById('bio').value = student.bio;
+  document.getElementById('department').value = student.department;
+  socials = student.socials ? [...student.socials] : [];
+  document.getElementById('socialsPreview').innerHTML = socials.map((s, i) =>
+  `<div>
+    <b>${s.name}</b>: <a href="${s.link}" target="_blank">${s.link}</a>
+    <div class="inline-group">
+      <button type="button" onclick="editSocial(${i})">Düzenle</button>
+      <button type="button" onclick="removeSocial(${i})">Sil</button>
+    </div>
+  </div>`
+).join('');
+  document.getElementById('editIndex').value = index;
+  document.getElementById('addStudentBtn').style.display = 'none';
+  document.getElementById('updateStudentBtn').style.display = '';
+  document.getElementById('cancelEditBtn').style.display = '';
+}
+
+function updateStudent() {
+  const year = document.getElementById('yearSelect').value;
+  const className = document.getElementById('classSelect').value;
+  const index = parseInt(document.getElementById('editIndex').value, 10);
+  if (index < 0) return;
+  const students = jsonData.years[year].classes[className].students;
+  students[index] = {
+    ...students[index],
+    number: document.getElementById('number').value,
+    name: document.getElementById('name').value,
+    image: document.getElementById('image').value || "/placeholder.svg",
+    bio: document.getElementById('bio').value,
+    department: document.getElementById('department').value,
+    socials: socials
+  };
+  socials = [];
+  document.getElementById('socialsPreview').innerText = '';
+  document.querySelectorAll('#number, #name, #image, #bio, #department').forEach(i => i.value = '');
+  document.getElementById('editIndex').value = -1;
+  document.getElementById('addStudentBtn').style.display = '';
+  document.getElementById('updateStudentBtn').style.display = 'none';
+  populateStudents();
+}
+
+function cancelEdit() {
+  document.getElementById('editIndex').value = -1;
+  document.getElementById('addStudentBtn').style.display = '';
+  document.getElementById('updateStudentBtn').style.display = 'none';
+  document.getElementById('cancelEditBtn').style.display = 'none';
+  socials = [];
+  document.getElementById('socialsPreview').innerText = '';
+  document.querySelectorAll('#number, #name, #image, #bio, #department').forEach(i => i.value = '');
+}
+
+function removeStudent(index) {
+  const year = document.getElementById('yearSelect').value;
+  const className = document.getElementById('classSelect').value;
+  jsonData.years[year].classes[className].students.splice(index, 1);
+  populateStudents();
+}
+
+async function saveToDB() {
+  await fetch('/admin/save-json', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(jsonData)
+  });
+  alert('Veritabanına kaydedildi!');
+}
+
+async function addYear() {
+  const year = prompt('Yeni yıl girin (ör: 2026):');
+  if (!year) return;
+  if (!jsonData.years[year]) {
+    jsonData.years[year] = { image: "/placeholder.svg", classes: {} };
+    await saveToDB();
+    await loadJSON();
+    alert('Yeni yıl eklendi!');
+  } else {
+    alert('Bu yıl zaten mevcut!');
+  }
+}
+
+async function addClass() {
+  const year = document.getElementById('yearSelect').value;
+  if (!year) {
+    alert('Önce bir yıl seçin!');
+    return;
+  }
+  const className = prompt('Yeni sınıf adı girin (ör: 12-G):');
+  if (!className) return;
+  if (!jsonData.years[year].classes[className]) {
+    jsonData.years[year].classes[className] = { image: "/placeholder.svg", students: [] };
+    await saveToDB();
+    await loadJSON();
+    alert('Yeni sınıf eklendi!');
+  } else {
+    alert('Bu sınıf zaten mevcut!');
+  }
+}
+
+async function removeYear() {
+  const year = document.getElementById('yearSelect').value;
+  if (!year) {
+    alert('Önce bir yıl seçin!');
+    return;
+  }
+  if (!confirm(`${year} yılını silmek istediğinize emin misiniz?`)) return;
+  delete jsonData.years[year];
+  await saveToDB();
+  await loadJSON();
+  alert('Yıl silindi!');
+}
+
+async function removeClass() {
+  const year = document.getElementById('yearSelect').value;
+  const className = document.getElementById('classSelect').value;
+  if (!year || !className) {
+    alert('Önce bir yıl ve sınıf seçin!');
+    return;
+  }
+  if (!confirm(`${className} sınıfını silmek istediğinize emin misiniz?`)) return;
+  delete jsonData.years[year].classes[className];
+  await saveToDB();
+  await loadJSON();
+  alert('Sınıf silindi!');
+}
+
+function removeSocial(index) {
+  socials.splice(index, 1);
+  updateSocialsPreview();
+}
+
+function editSocial(index) {
+  const s = socials[index];
+  document.getElementById('studentSocialSelect').value = '';
+  document.getElementById('studentSocialCustom').style.display = 'block';
+  document.getElementById('studentSocialCustom').value = s.name;
+  document.getElementById('studentSocialValue').value = s.link.replace(/^https?:\/\/(instagram\.com\/|tiktok\.com\/@|youtube\.com\/@|twitter\.com\/|github\.com\/|linkedin\.com\/in\/)?/, '');
+  socials.splice(index, 1);
+  updateSocialsPreview();
+}
+
+function updateSocialsPreview() {
+  document.getElementById('socialsPreview').innerHTML = socials.map((s, i) =>
+    `<div>
+      <b>${s.name}</b>: <a href="${s.link}" target="_blank">${s.link}</a>
+      <button type="button" onclick="editSocial(${i})">Düzenle</button>
+      <button type="button" onclick="removeSocial(${i})">Sil</button>
+    </div>`
+  ).join('');
+}
+
+function removeComment(studentIndex, commentIndex) {
+  const year = document.getElementById('yearSelect').value;
+  const className = document.getElementById('classSelect').value;
+  const students = jsonData.years[year].classes[className].students;
+  if (students[studentIndex].comments) {
+    students[studentIndex].comments.splice(commentIndex, 1);
+    updateOutput();
+    populateStudents();
+  }
+}
+
+function editComment(studentIndex, commentIndex) {
+  const year = document.getElementById('yearSelect').value;
+  const className = document.getElementById('classSelect').value;
+  const students = jsonData.years[year].classes[className].students;
+  const comment = students[studentIndex].comments[commentIndex];
+  // Fill the comment form with the comment's data
+  document.getElementById('commentTarget').value = studentIndex;
+  document.getElementById('commentText').value = comment.text || '';
+  document.getElementById('commentAuthor').value = comment.author || '';
+  document.getElementById('commentInsta').value = comment.insta || '';
+  // Convert date to yyyy-mm-dd for input
+  if (comment.date) {
+    const parts = comment.date.split('.');
+    if (parts.length === 3) {
+      document.getElementById('commentDate').value = `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+    }
+  }
+  document.getElementById('addCommentBtn').style.display = 'none';
+  document.getElementById('updateCommentBtn').style.display = '';
+  document.getElementById('editCommentIndex').value = commentIndex;
+}
+
+function updateComment() {
+  const year = document.getElementById('yearSelect').value;
+  const className = document.getElementById('classSelect').value;
+  const students = jsonData.years[year].classes[className].students;
+  const studentIndex = parseInt(document.getElementById('commentTarget').value, 10);
+  const commentIndex = parseInt(document.getElementById('editCommentIndex').value, 10);
+  if (studentIndex < 0 || commentIndex < 0) return;
+  const text = document.getElementById('commentText').value;
+  const author = document.getElementById('commentAuthor').value;
+  const linkRaw = document.getElementById('commentInsta').value.trim();
+  const date = document.getElementById('commentDate').value.split('-').reverse().join('.');
+  let link = linkRaw;
+  if (linkRaw && !/^https?:\/\//i.test(linkRaw)) {
+    link = "https://instagram.com/" + linkRaw.replace(/^@/, "");
+  }
+  students[studentIndex].comments[commentIndex] = { text, author, insta: link, date };
+  document.getElementById('commentText').value = '';
+  document.getElementById('commentAuthor').value = '';
+  document.getElementById('commentInsta').value = '';
+  document.getElementById('commentDate').value = '';
+  document.getElementById('editCommentIndex').value = -1;
+  document.getElementById('addCommentBtn').style.display = '';
+  document.getElementById('updateCommentBtn').style.display = 'none';
+  updateOutput();
+  populateStudents();
+}
+
+document.getElementById('outputJson').addEventListener('input', function() {
+  try {
+    const parsed = JSON.parse(this.value);
+    jsonData = parsed;
+    populateYearSelect();
+    populateClasses();
+    populateStudents();
+  } catch (e) {
+    alert('Geçersiz JSON formatı!');
+  }
+});
+
 loadJSON();
+
+function toggleJsonFullscreen() {
+  const textarea = document.getElementById('outputJson');
+  const btn = document.getElementById('fullscreenJsonBtn');
+  const exitBtn = document.getElementById('exitFullscreenBtn');
+  textarea.classList.toggle('fullscreen');
+  if (textarea.classList.contains('fullscreen')) {
+    btn.textContent = 'Küçült';
+    exitBtn.style.display = '';
+  } else {
+    btn.textContent = 'Tam Ekran';
+    exitBtn.style.display = 'none';
+  }
+}
+
+function exitJsonFullscreen() {
+  const textarea = document.getElementById('outputJson');
+  const btn = document.getElementById('fullscreenJsonBtn');
+  const exitBtn = document.getElementById('exitFullscreenBtn');
+  textarea.classList.remove('fullscreen');
+  btn.textContent = 'Tam Ekran';
+  exitBtn.style.display = 'none';
+}
 </script>
 </body>
 </html>
