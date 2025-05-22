@@ -11,31 +11,38 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
     <title><%= title %></title>
     <link rel="stylesheet" href="/styles.css">
 
-    <meta name="title" content=`<%= title %>` />
-    <meta name="description" content=`<%= student.bio %>` />
+    <meta name="title" content="<%= title %>" />
+    <meta name="description" content="<%= student.bio %>" />
 
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yillik75.com.tr/" />
-    <meta property="og:title" content=`<%= title %>` />
-    <meta property="og:description" content=`<%= student.bio %>` />
-    <meta property="og:image" content=`<%= student.image %>` />
+    <meta property="og:site_name" content="Yillik75" />
+    <meta property="og:title" content="<%= title %>" />
+    <meta property="og:description" content="<%= student.bio %>" />
+    <meta property="og:image" content="<%= student.image %>" />
 
-    <meta property="twitter:card" content="summary" />
-    <meta property="twitter:url" content="https://yillik75.com.tr/" />
-    <meta property="twitter:title" content=`<%= title %>` />
-    <meta property="twitter:description" content=`<%= student.bio %>` />
-    <meta property="twitter:image" content=`<%= student.image %>` />
-    <meta name="twitter:image:alt" content=`<%= student.name %>`>
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://yillik75.com.tr/" />
+    <meta name="twitter:domain" content="yillik75.com.tr" />
+    <meta name="twitter:title" content="<%= title %>" />
+    <meta name="twitter:description" content="<%= student.bio %>" />
+    <meta name="twitter:image" content="<%= student.image %>" />
+    <meta name="twitter:image:alt" content="<%= student.name %>" />
+    
 
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/runterya/image/upload/v1747888610/yillik75/9d2d608bef6a2b07ad57bef19c44aae0.jpg" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="https://res.cloudinary.com/runterya/image/upload/v1747888610/yillik75/9d2d608bef6a2b07ad57bef19c44aae0.jpg" />
-    <link rel="shortcut icon" href="https://res.cloudinary.com/runterya/image/upload/v1747888610/yillik75/9d2d608bef6a2b07ad57bef19c44aae0.jpg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/runterya/image/upload/v1747888610/yillik75/9d2d608bef6a2b07ad57bef19c44aae0.jpg" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Yıllık75" />
-    <link rel="manifest" href="https://res.cloudinary.com/runterya/image/upload/v1747888610/yillik75/9d2d608bef6a2b07ad57bef19c44aae0.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
