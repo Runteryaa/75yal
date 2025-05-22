@@ -356,7 +356,7 @@ document.getElementById('imageUploadForm').addEventListener('submit', async func
         });
         const data = await res.json();
         if (data.url) {
-    const proxyUrl = `https://cdn.kirosya.com/proxy?url=${encodeURIComponent(data.url)}`;
+    const proxyUrl = `https://cdn.yillik75.com.tr/image/${encodeURIComponent(data.url)}`;
     document.getElementById('image').value = proxyUrl;
     alert('Fotoğraf başarıyla yüklendi!');
 } else {
