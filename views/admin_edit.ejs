@@ -356,9 +356,10 @@ document.getElementById('imageUploadForm').addEventListener('submit', async func
         });
         const data = await res.json();
         if (data.url) {
-            document.getElementById('image').value = data.url;
-            alert('Fotoğraf başarıyla yüklendi!');
-        } else {
+    const proxyUrl = `https://cdn.kirosya.com/proxy?url=${encodeURIComponent(data.url)}`;
+    document.getElementById('image').value = proxyUrl;
+    alert('Fotoğraf başarıyla yüklendi!');
+} else {
             alert('Yükleme başarısız: ' + (data.error || ''));
         }
     } catch (err) {
