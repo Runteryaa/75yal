@@ -8,6 +8,9 @@ const admin = require('firebase-admin');
 const crypto = require('crypto');
 const FormData = require('form-data');
 require('dotenv').config();
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
 
 
 const serviceAccount = {
@@ -40,7 +44,6 @@ admin.initializeApp({
   databaseURL: process.env.DB_URL
 });
 const db = admin.database();
-
 
 app.get('/', async (req, res) => {
     const snapshot = await db.ref('/').once('value');
@@ -141,7 +144,7 @@ app.get('/search', async (req, res) => {
     let results = [];
     for (const [year, yearData] of Object.entries(studentData.years)) {
         for (const [className, classData] of Object.entries(yearData.classes)) {
-            for (const student of classData.students) {
+            for (const student of (classData.students || [])) {
                 if (
                     student.name.toLowerCase().includes(query) ||
                     student.number === query ||
@@ -215,48 +218,37 @@ app.get('/data.json', cors(), (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'data.json'));
 });
 
-app.get('/admin/json', requireAdmin, (req, res) => {
-    res.render('admin_json', { title: 'JSON | Admin Paneli' });
+app.get('/admin/edit', requireAdmin, (req, res) => {
+    res.render('admin_edit', { title: 'Edit | Admin Paneli' });
 });
 
 app.post('/upload-image', upload.single('image'), async (req, res) => {
-    try {
-        const apiKey = process.env.IMGBB_API;
-
-        if (!apiKey) {
-            console.error('IMGBB API key is missing.');
-            return res.status(500).json({ error: 'IMGBB API key missing' });
-        }
-
-        if (!req.file) {
-            console.error('No file received in the request.');
-            return res.status(400).json({ error: 'No image file uploaded' });
-        }
-
-        const imageBase64 = req.file.buffer.toString('base64');
-        console.info(`Uploading image of size: ${req.file.size} bytes`);
-
-        const form = new FormData();
-        form.append('key', apiKey);
-        form.append('image', imageBase64);
-
-        const response = await axios.post('https://api.imgbb.com/1/upload', form, {
-            headers: form.getHeaders(),
-            timeout: 20000 // 20 seconds
-        });
-
-        if (response.data?.data?.url) {
-            console.info('Upload successful:', response.data.data.url);
-            return res.json({ url: response.data.data.url });
-        } else {
-            console.error('Upload failed: unexpected response', response.data);
-            return res.status(500).json({ error: 'Upload failed' });
-        }
-    } catch (err) {
-        console.error('Upload error:', err.message);
-        return res.status(500).json({ error: 'Upload error', details: err.message });
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No image file uploaded' });
     }
+
+    const stream = cloudinary.uploader.upload_stream(
+      { 
+        resource_type: 'image',
+        folder: 'yillik75'
+      },
+      (error, result) => {
+        if (error) {
+          console.error('Cloudinary upload error:', error);
+          return res.status(500).json({ error: 'Cloudinary upload error', details: error.message });
+        }
+        return res.json({ url: result.secure_url });
+      }
+    );
+    stream.end(req.file.buffer);
+
+  } catch (err) {
+    console.error('Upload error:', err.message);
+    return res.status(500).json({ error: 'Upload error', details: err.message });
+  }
 });
+
 
 app.post('/admin/add-student', requireAdmin, async (req, res) => {
   const { year, className, student } = req.body;
