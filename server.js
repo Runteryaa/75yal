@@ -231,7 +231,11 @@ app.post('/upload-image', upload.single('image'), async (req, res) => {
     const stream = cloudinary.uploader.upload_stream(
       { 
         resource_type: 'image',
-        folder: 'yillik75'
+        folder: 'yillik75',
+        quality: "auto:best",
+        fetch_format: "auto",
+        width: 400,
+        crop: "limit"
       },
       (error, result) => {
         if (error) {
@@ -295,7 +299,6 @@ app.use((req, res) => {
     res.status(404).render('404', { title: 'Sayfa Bulunamadı' });
 });
 
-// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

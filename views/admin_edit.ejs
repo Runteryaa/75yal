@@ -359,7 +359,9 @@ document.getElementById('imageUploadForm').addEventListener('submit', async func
             document.getElementById('image').value = data.url;
             alert('Fotoğraf başarıyla yüklendi!');
         } else {
-            alert('Yükleme başarısız: ' + (data.error || ''));
+            alert(data.error + ": " + ( data.details || ''));
+            console.error('Yükleme hatası:', data.error);
+            console.error('Yükleme hatası:', data.details);
         }
     } catch (err) {
         alert('Yükleme sırasında bir hata oluştu!');
