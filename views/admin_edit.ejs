@@ -355,19 +355,12 @@ document.getElementById('imageUploadForm').addEventListener('submit', async func
             body: formData
         });
         const data = await res.json();
-if (data.url) {
-    const match = data.url.match(/\/yillik75\/(.+)$/);
-    if (match && match[1]) {
-        const fileName = match[1]; // örnek: 9d2d608bef6a2b07ad57bef19c44aae0.jpg
-        const proxyUrl = `https://cdn.yillik75.com.tr/images/${fileName}`;
-        document.getElementById('image').value = proxyUrl;
-        alert('Fotoğraf başarıyla yüklendi!');
-    } else {
-        alert('Görsel URL\'si beklenen formatta değil.');
-    }
-} else {
-    alert('Fotoğraf yüklenemedi.');
-}
+        if (data.url) {
+            document.getElementById('image').value = data.url;
+            alert('Fotoğraf başarıyla yüklendi!');
+        } else {
+            alert('Yükleme başarısız: ' + (data.error || ''));
+        }
     } catch (err) {
         alert('Yükleme sırasında bir hata oluştu!');
     }

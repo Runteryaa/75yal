@@ -75,7 +75,7 @@
             <h2>Öğrenciler</h2>
         </section>
         <section class="content">
-            <% if (typeof query !== 'undefined') { %>
+            <% if (results.length > 0 && typeof query !== 'undefined') { %>
                 <p>
                     "<%= query %>" için <%= results.length %> sonuç bulundu.
                 </p>
@@ -97,7 +97,7 @@
                 <% }) %>
             </div>
             <% if (results.length === 0 && typeof query !== 'undefined') { %>
-                <p class="no-results">Sonuç bulunamadı.</p>
+                <p>Sonuç bulunamadı.</p>
             <% } %>
         </section>
     </main>
