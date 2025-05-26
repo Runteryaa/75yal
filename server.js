@@ -232,7 +232,7 @@ app.post('/admin/login', loginLimiter, async (req, res) => {
         success: password === ADMIN_PASSWORD
     };
 
-    console.log(`[ADMIN LOGIN ATTEMPT] IP: ${req.ip} | Time: ${formatted} | Success: ${attemptLog.success}`);
+    console.log(`[ADMIN LOGIN ATTEMPT] IP: ${req.ip} | Time: ${formatted}`);
     console.log('Attempting to log to Firebase:', attemptLog);
 
     try {
@@ -343,6 +343,16 @@ app.get('/admin/logs', requireAdmin, async (req, res) => {
     logs.sort((a, b) => b.key.localeCompare(a.key));
     logs = logs.slice(0, 100);
     res.render('admin_logs', { title: 'Admin Giriş Logları', logs });
+});
+
+app.get('/admin/logout', (req, res) => {
+    const isProd = process.env.NODE_ENV === 'production';
+
+    res.setHeader('Set-Cookie', [
+        `admin=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0${isProd ? '; Secure' : ''}`
+    ]);
+
+    res.redirect('/admin/login');
 });
 
 app.use((req, res) => {
