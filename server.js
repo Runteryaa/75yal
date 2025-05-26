@@ -219,9 +219,13 @@ app.post('/admin/login', loginLimiter, async (req, res) => {
     const now = new Date();
     const utc3 = new Date(now.getTime() + 3 * 60 * 60 * 1000);
     const formatted = utc3.toISOString().replace('T', ' ').substring(0, 19) + ' (UTC+3)';
+
+    const cfConnectingIp = req.headers['cf-connecting-ip'] || req.ip;
+
     const attemptLog = {
-        ip: req.ip,
         time: formatted,
+        ip: cfConnectingIp,
+        cf_ip: cfConnectingIp,
         timestamp: Date.now(),
         headers: req.headers,
         password_length: password ? password.length : 0,
