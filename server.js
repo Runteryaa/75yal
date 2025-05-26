@@ -9,6 +9,7 @@ const crypto = require('crypto');
 const FormData = require('form-data');
 require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
+const rateLimit = require('express-rate-limit');
 
 cloudinary.config();
 
@@ -22,8 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
-
 
 const serviceAccount = {
   type: process.env.FIREBASE_TYPE,
@@ -187,7 +186,7 @@ function parseCookies(req) {
 
 function requireAdmin(req, res, next) {
     const cookies = parseCookies(req);
-    if (cookies.admin === 'true') {
+    if (cookies.admin === process.env.ADMIN_PASSWORD) {
         return next();
     }
     res.redirect('/admin/login');
@@ -201,13 +200,48 @@ app.get('/admin/login', (req, res) => {
     res.render('admin_login', { error: null });
 });
 
-app.post('/admin/login', (req, res) => {
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: 'Çok fazla giriş denemesi yaptınız. Lütfen 15 dakika sonra tekrar deneyin.',
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    res.status(429);
+    res.render('admin_login', { error: 'Çok fazla giriş denemesi yaptınız. Lütfen 15 dakika sonra tekrar deneyin.' });
+  }
+});
+
+app.post('/admin/login', loginLimiter, async (req, res) => {
     const { password } = req.body;
+
+    const now = new Date();
+    const utc3 = new Date(now.getTime() + 3 * 60 * 60 * 1000);
+    const formatted = utc3.toISOString().replace('T', ' ').substring(0, 19) + ' (UTC+3)';
+    const attemptLog = {
+        ip: req.ip,
+        time: formatted,
+        timestamp: Date.now(),
+        headers: req.headers,
+        password_length: password ? password.length : 0,
+        success: password === ADMIN_PASSWORD
+    };
+
+    console.log(`[ADMIN LOGIN ATTEMPT] IP: ${req.ip} | Time: ${formatted} | Success: ${attemptLog.success}`);
+    console.log('Attempting to log to Firebase:', attemptLog);
+
+    try {
+        const dbResult = await db.ref('login_attempts').push(attemptLog);
+        console.log('Logged to Firebase successfully:', dbResult.key);
+    } catch (err) {
+        console.error('Error logging to Firebase:', err);
+    }
+
     if (password === ADMIN_PASSWORD) {
         const sessionToken = crypto.randomBytes(32).toString('hex');
-
+        const isProd = process.env.NODE_ENV === 'production';
         res.setHeader('Set-Cookie', [
-            `admin=true; Path=/; HttpOnly; SameSite=Strict; Secure${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`
+            `admin=${process.env.ADMIN_PASSWORD}; Path=/; HttpOnly; SameSite=Strict${isProd ? '; Secure' : ''}`
         ]);
         return res.redirect('/admin');
     }
@@ -293,6 +327,17 @@ app.post('/admin/save-json', requireAdmin, async (req, res) => {
   const data = req.body;
   await db.ref('/').set(data);
   res.json({ success: true });
+});
+
+app.get('/admin/logs', requireAdmin, async (req, res) => {
+    const snapshot = await db.ref('login_attempts').once('value');
+    let logs = [];
+    snapshot.forEach(child => {
+        logs.push({ key: child.key, ...child.val() });
+    });
+    logs.sort((a, b) => b.key.localeCompare(a.key));
+    logs = logs.slice(0, 100);
+    res.render('admin_logs', { title: 'Admin Giriş Logları', logs });
 });
 
 app.use((req, res) => {
